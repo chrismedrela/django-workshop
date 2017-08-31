@@ -11,4 +11,7 @@
 {{ object.preparation|linebreaks }}
 <p>Time for preparation: {{ object.time_for_preparation }} minutes</p>
 <a href="{% url 'recipes_recipe_index' %}">back to the overview</a>
+{% if object.image %}
+<p><img src="{{ object.photo.url }}" width="{{ object.photo.width }}" height="{{ object.photo.height }}"></p>
+{% endif %}
 {% endblock %}

@@ -42,6 +42,7 @@ Linux and Mac OS X
 To prepare for the installation of Pillow under Linux the following
 packages must be installed:
 
+- libjpeg-dev
 - libjpeg62
 - liblcms1
 - python-dev
@@ -69,7 +70,7 @@ Finally you need to setup a media URL for development. Add the following
 lines at the end of :file:`cookbook/urls.py`:
 
 .. literalinclude:: ../src/cookbook/cookbook/urls.py
-    :lines: 1-11, 14
+    :lines: 1-5, 8-9, 12
     :emphasize-lines: 1, 3, 12
 
 Perform another check
@@ -110,23 +111,20 @@ the following command.
 
     $ python manage.py migrate
     Operations to perform:
-      Synchronize unmigrated apps: staticfiles, messages
-      Apply all migrations: admin, contenttypes, recipes, auth, sessions
-    Synchronizing apps without migrations:
-      Creating tables...
-        Running deferred SQL...
-      Installing custom SQL...
+      Apply all migrations: admin, auth, contenttypes, recipes, sessions
     Running migrations:
-      Rendering model states... DONE
       Applying contenttypes.0001_initial... OK
       Applying auth.0001_initial... OK
       Applying admin.0001_initial... OK
+      Applying admin.0002_logentry_remove_auto_add... OK
       Applying contenttypes.0002_remove_content_type_name... OK
       Applying auth.0002_alter_permission_name_max_length... OK
       Applying auth.0003_alter_user_email_max_length... OK
       Applying auth.0004_alter_user_username_opts... OK
       Applying auth.0005_alter_user_last_login_null... OK
       Applying auth.0006_require_contenttypes_0002... OK
+      Applying auth.0007_alter_validators_add_error_messages... OK
+      Applying auth.0008_alter_user_username_max_length... OK
       Applying recipes.0001_initial... OK
       Applying sessions.0001_initial... OK
 

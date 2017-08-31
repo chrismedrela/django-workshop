@@ -53,16 +53,10 @@ with the following command:
 
 .. index:: timezones
 
-Install support for timezones
-=============================
+Support for timezones
+=====================
 
 Starting with version 1.4, Django supports :djangodocs:`Timezones
-<topics/i18n/timezones/#time-zones>`. This is activated by default and it is
-highly recommended to install the `pytz <http://pytz.sourceforge.net/>`_
-package::
-
-    $ pip install pytz
-
-.. note::
-
-    Under Linux and Mac OS X root privileges may be required.
+<topics/i18n/timezones/#time-zones>`. This requires `pytz
+<http://pytz.sourceforge.net/>`_ which should be installed along with Django.
+You don't need to do any further steps in order to install it.

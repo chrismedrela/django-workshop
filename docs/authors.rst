@@ -21,6 +21,7 @@ Additional Authors
 Many thanks for supporting this project go to:
 
 - Andreas Hug
+- Chris Mędrela
 - Daniel Kriesten
 - Dave Brotherstone
 - Dinu Gherman

@@ -14,7 +14,7 @@ class Category(models.Model):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -40,7 +40,7 @@ class Recipe(models.Model):
         choices=DIFFICULTIES, default=DIFFICULTY_MEDIUM)
     category = models.ManyToManyField(Category, verbose_name='Categories')
     author = models.ForeignKey(User, verbose_name='Author')
-    photo = models.ImageField(upload_to='recipes', verbose_name='Photo')
+    photo = models.ImageField(upload_to='recipes', verbose_name='Photo', blank=True, null=True)
     date_created = models.DateTimeField(editable=False)
     date_updated = models.DateTimeField(editable=False)
 
@@ -49,7 +49,7 @@ class Recipe(models.Model):
         verbose_name_plural = 'Recipes'
         ordering = ['-date_created']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):

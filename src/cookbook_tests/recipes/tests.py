@@ -20,12 +20,12 @@ class RecipeSaveTests(TestCase):
         self.author = User.objects.create_user('testuser', 'test@example.com',
             'testuser')
 
+    @freeze_time('2014-01-01 10:00:00')
     def test_date_created_autoset(self):
         """Verifies date_created is autoset correctly."""
-        with freeze_time('2014-01-01 10:00:00'):
-            recipe = Recipe.objects.create(title=self.title, slug=slugify(self.title),
-                number_of_portions=self.number_of_portions, author=self.author)
-            self.assertEqual(recipe.date_created, timezone.now())
+        recipe = Recipe.objects.create(title=self.title, slug=slugify(self.title),
+            number_of_portions=self.number_of_portions, author=self.author)
+        self.assertEqual(recipe.date_created, timezone.now())
 
     def test_slug_is_unique(self):
         """Verifies if a slug is unique."""

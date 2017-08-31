@@ -41,7 +41,7 @@ class Recipe(models.Model):
         choices=DIFFICULTIES, default=DIFFICULTY_MEDIUM)
     category = models.ManyToManyField(Category, verbose_name='Categories')
     author = models.ForeignKey(User, verbose_name='Author')
-    photo = models.ImageField(upload_to='recipes', verbose_name='Photo')
+    photo = models.ImageField(upload_to='recipes', verbose_name='Photo', blank=True, null=True)
     date_created = models.DateTimeField(editable=False)
     date_updated = models.DateTimeField(editable=False)
 

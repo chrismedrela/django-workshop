@@ -64,12 +64,12 @@ class RecipeViewsTests(TestCase):
         response = self.client.get(add_url)
         self.assertEqual(response.status_code, 200)
         photo_path = os.path.join(settings.BASE_DIR, 'recipes/fixtures/3215317191_209e19288f_t.jpg')
-        with open(photo_path) as fp:
+        with open(photo_path, 'rb') as fp:
             post_data = {
-                'title': u'Spätzle',
+                'title': 'Spätzle',
                 'number_of_portions': 4,
-                'ingredients': u'Lorem ipsum',
-                'preparation': u'Lorem ipsum',
+                'ingredients': 'Lorem ipsum',
+                'preparation': 'Lorem ipsum',
                 'difficulty': 2,
                 'category': 1,
                 'photo': fp,

@@ -241,10 +241,10 @@ man_pages = [
 # nothing. The default is False.
 todo_include_todos = False
 
-extlinks = {'djangodocs': ('https://docs.djangoproject.com/en/1.8/%s', None)}
+extlinks = {'djangodocs': ('https://docs.djangoproject.com/en/1.11/%s', None)}
 
 rst_epilog = """
-.. |djangoversion| replace:: 1.8
+.. |djangoversion| replace:: 1.11
 """
 
 linkcheck_ignore = [

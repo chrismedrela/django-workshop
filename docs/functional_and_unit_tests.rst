@@ -200,7 +200,7 @@ Create a directory :file:`fixtures` in the directory :file:`recipes`:
 
 Then you create a JSON file with the models of the recipes application::
 
-    $ python manage.py dumpdata recipes --indent 4 --natural > recipes/fixtures/test_views_data.json
+    $ python manage.py dumpdata recipes --indent 4 --natural-foreign > recipes/fixtures/test_views_data.json
 
 Now you create the file :file:`recipes/tests/test_views.py` with the
 following content:

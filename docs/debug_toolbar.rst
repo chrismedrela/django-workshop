@@ -37,22 +37,77 @@ Use :command:`pip` to install Django Debug Toolbar:
 
     $ pip install django-debug-toolbar
 
+``INSTALLED_APPS``
+------------------
+
 Make sure that ``django.contrib.staticfiles`` is :djangodocs:`set up
 properly <howto/static-files/>` and add ``debug_toolbar`` to your
-``INSTALLED_APPS`` setting::
+``INSTALLED_APPS`` setting:
 
-    INSTALLED_APPS = (
+::
+
+    INSTALLED_APPS = [
         # ...
         'django.contrib.staticfiles',
         # ...
         'debug_toolbar',
-    )
+    ]
 
     STATIC_URL = '/static/'
 
-    STATICFILES_DIRS = (
+    STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static'),
-    )
+    ]
+
+Middleware
+----------
+
+We need to append ``DebugToolbarMiddleware`` to ``MIDDLEWARE``:
+
+::
+
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+
+URLs
+----
+
+On top of that, we need to register URLs at the end of ``cookbook/urls.py``
+file:
+
+::
+
+    if settings.DEBUG:
+        import debug_toolbar
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns
+
+And add the following import at the beginning of the file:
+
+::
+
+    from django.conf.urls import include
+
+``INTERNAL_IPS``
+----------------
+
+The Debug Toolbar is shown only if your IP is listed in the ``INTERNAL_IPS``
+setting. 
+
+::
+
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]
 
 After that the Debug Toolbar is displayed at the right side of your
 browser window.

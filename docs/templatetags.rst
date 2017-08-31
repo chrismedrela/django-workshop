@@ -121,7 +121,7 @@ Now you can use the new template tag, for example in the template
 :file:`recipes/templates/recipes/detail.html`.
 
 At first our template tag must be loaded. The best place to do this is the head
-of the template:
+of the template, but after ``{% extends "base.html" %}`` tag:
 
 ..  code-block:: html+django
 

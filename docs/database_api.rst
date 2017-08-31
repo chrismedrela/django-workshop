@@ -18,7 +18,11 @@ you will restore your original data from the backup again.
 ..  note::
 
     You need the program `sqlite3 <http://www.sqlite.org/>`_ to use the
-    :program:`dbshell` command.
+    :program:`dbshell` command. On Ubuntu, you can install it in terminal:
+
+    ::
+
+        $ sudo apt install sqlite3
 
 This is how you create the backup:
 
@@ -31,6 +35,13 @@ Now you can flush all tables in the database:
 ::
 
     $ python manage.py sqlflush | python manage.py dbshell
+
+Make sure that we reset autoincrement counters, so that the user that we'll
+create in a moment will have ID equals 1.
+
+::
+
+    $ echo "delete from sqlite_sequence" | python manage.py dbshell
 
 Before you can import the data must create a superuser again:
 
@@ -71,124 +82,127 @@ following command you can start it:
 
     $ python manage.py shell
 
-::
+.. doctest::
 
-    # import the models
-    >>> from recipes.models import Category, Recipe
+    >>> from recipes.models import Category, Recipe  # import the models
 
-    # create a QuerySet with all recipes
+    >>> # create a QuerySet with all recipes
     >>> all_recipes = Recipe.objects.all()
     >>> all_recipes
-    [<Recipe: Bärlauchstrudel>, <Recipe: Kohleintopf mit Tortellini>,
-        <Recipe: Käsespiegelei auf Spinatnudeln>]
-    # all_recipes ist ein QuerySet
+    <QuerySet [<Recipe: Aprikosenknödel>, <Recipe: Salat>, 
+    <Recipe: Omas beste Frikadellen>, <Recipe: Aglio e Olio>, 
+    <Recipe: Bratnudeln auf deutsche Art>]
+    >>> # all_recipes is a QuerySet
     >>> type(all_recipes)
     <class 'django.db.models.query.QuerySet'>
     >>> all_recipes.count()
-    3
+    5
 
-    # a list of all fields names of the Recipe model
+    >>> # a list of all fields names of the Recipe model
     >>> [f.name for f in Recipe._meta.get_fields()]
     [u'id', 'title', 'slug', 'ingredients', 'preparation', 'time_for_preparation',
         'number_of_portions', 'difficulty', 'author', 'photo', 'date_created',
         'date_updated', 'category']
 
-    # look at single recipe from the QuerySet
+    >>> # look at single recipe from the QuerySet
     >>> all_recipes[1]
-    <Recipe: Kohleintopf mit Tortellini>
+    <Recipe: Salat>
     >>> all_recipes[1].title
-    u'Kohleintopf mit Tortellini'
+    u'Salat'
     >>> all_recipes[1].number_of_portions
-    4
+    6
 
-    # create a new Category
-    >>> salate = Category(name='Leckere Salate')
+    >>> # create a new Category
+    >>> salate = Category(name='Schnell Salate')
     >>> salate.id
     >>> salate.save()
     >>> salate.id
     7
     >>> salate.name
-    'Leckere Salate'
+    'Schnell Salate'
     >>> salate.slug
     ''
 
-    # update the slug
+    >>> # update the slug
     >>> from django.template.defaultfilters import slugify
     >>> slugify(salate.name)
-    u'leckere-salate'
+    u'schnell-salate'
     >>> salate.slug = slugify(salate.name)
     >>> salate.save()
     >>> salate.slug
-    u'leckere-salate'
+    u'schnell-salate'
 
-    # if a record can not be found an DoesNotExist Exception is raised
+    >>> # if a record can not be found an DoesNotExist Exception is raised
     >>> Category.objects.get(pk=23)
     Traceback (most recent call last):
         ...
     DoesNotExist: Category matching query does not exist.
 
-    # fetch a single model
+    >>> # fetch a single model
     >>> Category.objects.get(pk=7)
-    <Category: Leckere Salate>
+    <Category: Schnell Salate>
 
-    # use the filter method
+    >>> # use the filter method
     >>> Category.objects.filter(name__startswith='Salate')
-    []
-    # Es wird ein QuerySet zurückgegeben
-    >>> Category.objects.filter(name__startswith='Lecker')
-    [<Category: Leckere Salate>]
-    # So kann man direkt das Objekt bekommen
-    >>> Category.objects.filter(name__startswith='Lecker')[0]
-    <Category: Leckere Salate>
-    # Auch auf ein QuerySet kann ein Filter angewendet werden
+    <QuerySet []>
+    >>> # only one object matches the following filter
+    >>> Category.objects.filter(name__startswith='Schnell')
+    <QuerySet [<Category: Schnell Salate>]>
+    >>> # you can access one object from the queryset
+    >>> Category.objects.filter(name__startswith='Schnell')[0]
+    <Category: Schnell Salate>
     >>> categories = Category.objects.all()
-    >>> categories.filter(name__startswith='Lecker')
-    [<Category: Leckere Salate>]
+    >>> categories.filter(name__startswith='Schnell')
+    [<Category: Schnell Salate>]
 
-    # access recipes using a Category
+    >>> # access recipes using a Category
     >>> categories[1]
-    <Category: Pasta>
+    <Category: Hauptspeise>
     >>> type(categories[1].recipe_set)
-    <class 'django.db.models.fields.related.ManyRelatedManager'>
+    <class 'django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager'>
     >>> categories[1].recipe_set.all()
-    [<Recipe: Kohleintopf mit Tortellini>, <Recipe: Käsespiegelei auf Spinatnudeln>]
+    <QuerySet [<Recipe: Omas beste Frikadellen>, <Recipe: Aglio e Olio>, 
+    <Recipe: Bratnudeln auf deutsche Art>]>
 
-    # use the relation between Recipe and Category to create a new Category
+    >>> # use the relation between Recipe and Category to create a new Category
     >>> recipe = all_recipes[0]
-    # this Recipe has three Categories
+    >>> # this Recipe has one Category
     >>> recipe.category.all()
-    [<Category: Fleisch>, <Category: Backen>, <Category: Frühling>]
+    <QuerySet [<Category: Party>]>
     >>> recipe.category.create(name='Foo')
     <Category: Foo>
-    # Now there are four Categories
+    >>> # Now there are two Categories
     >>> recipe.category.all()
-    [<Category: Fleisch>, <Category: Backen>, <Category: Frühling>, <Category: Foo>]
-    # delete the new Category
+    <QuerySet [<Category: Party>, <Category: Foo>]>
+    >>> # delete the new Category
     >>> foo = Category.objects.filter(name='Foo')
     >>> foo
-    [<Category: Foo>]
+    <QuerySet [<Category: Foo>]>
     >>> foo.delete()
+    (2, {'recipes.Category': 1, 'recipes.Recipe_category': 1})
     >>> recipe.category.all()
-    [<Category: Fleisch>, <Category: Backen>, <Category: Frühling>]
+    <QuerySet [<Category: Party>]>
 
-    # create complex queries using the Q object
-    # start with a simple filter
+    >>> # create complex queries using the Q object
+    >>> # start with a simple filter
     >>> Recipe.objects.filter(number_of_portions=4)
-    [<Recipe: Bärlauchstrudel>, <Recipe: Kohleintopf mit Tortellini>]
+    <QuerySet [<Recipe: Aprikosenknödel>, <Recipe: Aglio e Olio>, <Recipe: Bratnudeln auf deutsche Art>]>
 
-    # all Recipes that do not match the criteria
+    >>> # all Recipes that do not match the criteria
     >>> Recipe.objects.exclude(number_of_portions=4)
-    [<Recipe: Käsespiegelei auf Spinatnudeln>]
+    <QuerySet [<Recipe: Salat>, <Recipe: Omas beste Frikadellen>]>
 
-    # the following query connects both filters using "AND"
-    >>> Recipe.objects.filter(number_of_portions=4, title__startswith='K')
-    [<Recipe: Kohleintopf mit Tortellini>]
+    >>> # the following query connects both filters using "AND"
+    >>> Recipe.objects.filter(number_of_portions=4, title__startswith='B')
+    <QuerySet [<Recipe: Bratnudeln auf deutsche Art>]>
 
-    # a Q object can also be used to create an "OR" connection
+    >>> # a Q object can also be used to create an "OR" connection
     >>> from django.db.models import Q
     >>> Recipe.objects.filter(Q(number_of_portions=4) | Q(title__startswith='K'))
-    [<Recipe: Bärlauchstrudel>, <Recipe: Kohleintopf mit Tortellini>,
-        <Recipe: Käsespiegelei auf Spinatnudeln>]
+    <QuerySet [<Recipe: Aprikosenknödel>, <Recipe: Aglio e Olio>, 
+    <Recipe: Bratnudeln auf deutsche Art>]>
+
+    >>> exit()
 
 Delete the test data and restore the backup
 ===========================================

@@ -42,7 +42,17 @@ Create templates for error handling
 ===================================
 
 You can test these templates by setting ``DEBUG`` to ``False`` in
-:file:`local_settings.py` and call an URL that does not exist.
+:file:`local_settings.py`. On top of that, you need to define ``ALLOWED_HOSTS``
+in the same file:
+
+::
+
+    DEBUG = False
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+    ]
+
+Then, call an URL that does not exist.
 
 Without the two templates you see the message "A server error occurred. Please
 contact the administrator.". Exception and stack trace you see on the terminal.
@@ -56,6 +66,16 @@ contains a ready-to-use 404 page. To use this page you copy the file
 :file:`404.html` from the HTML5 Boilerplate directory in the template directory
 in the project directory. If you are now call a not existing URL, you see this
 page instead.
+
+Revert changes in ``local_settings.py``
+=======================================
+
+Before we continue, we need to recover the previous version of
+``local_settings.py`` file:
+
+::
+
+    DEBUG = True
 
 Further links to the Django documentation
 =========================================

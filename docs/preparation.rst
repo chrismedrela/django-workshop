@@ -15,7 +15,7 @@ Therefore Python needs to be installed first.
 
 .. note::
 
-    Django |djangoversion| supports Python from version 2.7. If you have an
+    Django |djangoversion| supports Python from version 2.7 and 3.4+. If you have an
     older version of Python, you should update it. Since version 1.5 Django
     supports Python 3.
 
@@ -26,7 +26,7 @@ command line option :option:`-V`:
 
 .. note::
 
-    If you are using Python 3 please make sure you have Python 3.3.2 or
+    If you are using Python 3 please make sure you have Python 3.4 or
     greater installed. Otherwise there will be problems.
 
     Also consider adding the following future-import on top of every

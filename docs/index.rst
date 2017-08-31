@@ -47,9 +47,14 @@ Table of contents
    error_handling
    debugging
    authentication_registration
+   send_email
    recipe_form
+   messages
+   class_based_views
+   pagination
    middleware
    templatetags
+   templatefilters
    functional_and_unit_tests
    internationalisation
    migrations
@@ -70,7 +75,6 @@ Table of contents
 
     Add missing chapters:
 
-    - Generic Views
     - Enhance templates
     - Defining Methods on the Model
     - Managers

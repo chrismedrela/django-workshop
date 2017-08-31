@@ -73,15 +73,12 @@ If you want to you can delete the ``div`` containers overwritten with
 Using ``RequestContext`` in the views
 =====================================
 
-Both views need to be expanded to pass the ``RequestContext`` to the
-``render_to_response`` functions.  First, the appropriate import needs
-to be added to :file:`recipes/views.py`. Then ``RequestContext`` has to
-be passed as ``context_instance`` to the ``render_to_response``
-function. Your views should look like this afterwards:
+In both views we need to switch from ``render_to_response`` to ``render``, so
+that the context is wrapped into ``RequestContext`` automatically.
 
 .. literalinclude:: ../src/cookbook_staticfiles/recipes/views.py
     :linenos:
-    :emphasize-lines: 2, 9-10, 15-16
+    :emphasize-lines: 1, 8, 13
 
 Further links to the Django documentation
 =========================================

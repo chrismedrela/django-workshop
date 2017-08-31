@@ -18,8 +18,7 @@ Provoke an ``AssertionError`` in the ``index`` view:
     def index(request):
         recipes = Recipe.objects.all()
         assert False
-        return render_to_response('recipes/index.html', {'object_list': recipes},
-            context_instance=RequestContext(request))
+        return render(request, 'recipes/index.html', {'object_list': recipes})
 
 You can use the optional second parameter of ``assert`` to issue additional
 information:
@@ -28,9 +27,8 @@ information:
 
     def index(request):
         recipes = Recipe.objects.all()
-        assert False, 'Recipe count: %d' % recipes.count()
-        return render_to_response('recipes/index.html', {'object_list': recipes},
-            context_instance=RequestContext(request))
+        assert False, 'Recipes count: {}'.format(recipes.count())
+        return render(request, 'recipes/index.html', {'object_list': recipes})
 
 ..  _logging_framework:
 
@@ -122,8 +120,8 @@ Now you can write to the log in the view:
 
     def index(request):
         recipes = Recipe.objects.all()
-        logger.debug('Recipe count: %d' % recipes.count())
-        return render_to_response('recipes/index.html', {'object_list': recipes})
+        logger.debug('Recipe count: {}'.format(recipes.count()))
+        return render(request, 'recipes/index.html', {'object_list': recipes})
 
 You can also see the entries in the log file in the "Logging" section of the
 Django debug toolbar. This saves you from having to open the log file to look
@@ -144,8 +142,7 @@ The debugger is activated most easily by calling ``import pdb; pdb.set_trace()``
     def detail(request, slug):
         recipe = get_object_or_404(Recipe, slug=slug)
         import pdb; pdb.set_trace()
-        return render_to_response('recipes/detail.html', {'object': recipe},
-            context_instance=RequestContext(request))
+        return render(request, 'recipes/detail.html', {'object': recipe})
 
 After the start of the ``detail`` view of the debugger starts in the terminal:
 
@@ -159,8 +156,8 @@ After the start of the ``detail`` view of the debugger starts in the terminal:
      13     def detail(request, slug):
      14         recipe = get_object_or_404(Recipe, slug=slug)
      15         import pdb; pdb.set_trace()
-     16  ->     return render_to_response('recipes/detail.html', {'object': recipe},
-     17             context_instance=RequestContext(request))
+     16  ->     return render(request, 'recipes/detail.html', {'object': recipe})
+     17             
     [EOF]
     (Pdb) slug
     u'kohleintopf-mit-tortellini'

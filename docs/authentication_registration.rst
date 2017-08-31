@@ -51,7 +51,13 @@ the following line:
 
 ::
 
-    url(r'^user/', include('userauth.urls')),
+    url(r'^user/', include(userauth.urls)),
+
+You also need to import the URLConf:
+
+::
+
+    import userauth.urls
 
 Authentication with the application ``user auth``
 =================================================
@@ -64,23 +70,23 @@ Now we create the file :file:`urls.py` in directory :file:`userauth`:
 ::
 
     from django.conf.urls import include, url
+    from django.contrib.auth import views as auth_views
     from django.core.urlresolvers import reverse_lazy
 
-
     urlpatterns = [
-        url(r'^login/$', 'django.contrib.auth.views.login',
+        url(r'^login/$', auth_views.login,
             {'template_name': 'userauth/login.html'}, name='userauth_login'),
-        url(r'^logout/$', 'django.contrib.auth.views.logout', {
+        url(r'^logout/$', auth_views.logout, {
                 'next_page': reverse_lazy('recipes_recipe_index'),
             },
             name='userauth_logout'),
-        url(r'^password-change/$', 'django.contrib.auth.views.password_change',
+        url(r'^password-change/$', auth_views.password_change,
             {
                 'template_name': 'userauth/password_change_form.html',
                 'post_change_redirect': 'userauth_password_change_done',
             },
             name='userauth_password_change'),
-        url(r'^password-change-done/$', 'django.contrib.auth.views.password_change_done',
+        url(r'^password-change-done/$', auth_views.password_change_done,
             {'template_name': 'userauth/password_change_done.html'},
             name='userauth_password_change_done'),
     ]
@@ -217,10 +223,14 @@ following login form in the navigation:
 
 .. code-block:: html
 
-    <form class="navbar-form pull-right">
-        <input class="span2" type="text" placeholder="Email">
-        <input class="span2" type="password" placeholder="Password">
-        <button type="submit" class="btn">Sign in</button>
+    <form class="navbar-form navbar-right" role="form">
+      <div class="form-group">
+        <input type="text" placeholder="Email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Sign in</button>
     </form>
 
 Replace the form with a block, in which you're using the ``include`` tag to
@@ -264,9 +274,11 @@ URLs:
 
     from django.views.generic import TemplateView
 
+    import userauth.views
+
     urlpatterns = [
         # ...
-        url(r'^register/$', 'userauth.views.register',
+        url(r'^register/$', userauth.views.register,
             {'next_page_name': 'userauth_register_done'},
             name='userauth_register'),
         url(r'^welcome/$',
@@ -290,8 +302,7 @@ you open the file :file:`userauth/views.py` and create the following function:
     from django.contrib.auth.forms import UserCreationForm
     from django.core.urlresolvers import reverse
     from django.http import HttpResponseRedirect
-    from django.shortcuts import render_to_response
-    from django.template import RequestContext
+    from django.shortcuts import render
 
 
     def register(request, template_name='userauth/register.html', next_page_name='/'):
@@ -302,8 +313,7 @@ you open the file :file:`userauth/views.py` and create the following function:
                 return HttpResponseRedirect(reverse(next_page_name))
         else:
             form = UserCreationForm()
-        return render_to_response(template_name, {'form': form},
-            context_instance=RequestContext(request))
+        return render(request, template_name, {'form': form})
 
 ``django.contrib.auth.forms`` provides the form ``UserCreationForm`` that we
 use to create a new user. The view just manages the processing of the data. The
@@ -358,8 +368,10 @@ in the template :file:`toggle_login.html`:
     {% if user.is_authenticated %}
         ...
     {% else %}
-        <p><a href="{% url 'userauth_login' %}">Login</a>
-        <a href="{% url 'userauth_register' %}">Register</a></p>
+        <div class="navbar-collapse collapse pull-right">
+            <a type="submit" class="btn btn-primary" href="{% url 'userauth_login' %}">Login</a>
+            <a type="submit" class="btn btn-default" href="{% url 'userauth_register' %}">Register</a>
+        </div>
     {% endif %}
 
 Test registration

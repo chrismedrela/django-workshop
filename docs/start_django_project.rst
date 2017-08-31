@@ -33,7 +33,7 @@ After you've created the project, you can change to the directory
 
 And try out the development server with the following command:
 
-.. literalinclude:: runserver.log
+.. literalinclude:: runserver-migrationsrequired.log
 
 Now you can open the "Welcome to Django" site from
 http://127.0.0.1:8000/.  After you've opened the site, you can kill the
@@ -71,14 +71,14 @@ constant which is preconfigured to use Django's template engine. Add the path
 to the templates directory to the ``DIRS`` list:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 56-70
+    :lines: 56-67, 69-71
     :emphasize-lines: 4
 
-The the existing database connection ``default`` is already configured to use
+The existing database connection ``default`` is already configured to use
 `SQLite <http://www.sqlite.org/>`_, because it's built into Python:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 75-83
+    :lines: 76-84
     :emphasize-lines: 5-8
 
 .. doctest::
@@ -92,7 +92,7 @@ The the existing database connection ``default`` is already configured to use
 Next change the timezone and language to suit:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 86-91
+    :lines: 87-92
 
 .. doctest::
     :hide:
@@ -111,7 +111,7 @@ Lastly, the path to the static files and the location for uploaded files must
 be defined:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 105-110
+    :lines: 106-111
 
 .. doctest::
     :hide:

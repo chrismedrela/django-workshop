@@ -12,7 +12,7 @@ It was not possible to alter or remove existing models via the
 Displaying all existing migrations
 ==================================
 
-Use the :command:`migrate` command to display all existing migrations:
+Use the :command:`showmigrations` command to display all existing migrations:
 
 .. command-output:: python manage.py showmigrations
     :cwd: ../src/cookbook_migrations

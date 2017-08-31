@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response, render
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 
 from .forms import RecipeForm
@@ -16,8 +16,7 @@ def index(request):
     recipes = Recipe.objects.all()
     logger.debug('Number of recipes: %d' % recipes.count())
     logger.info('This is the index view')
-    return render_to_response('recipes/index.html', {'object_list': recipes},
-        context_instance=RequestContext(request))
+    return render(request, 'recipes/index.html', {'object_list': recipes})
 
 
 def detail(request, slug):
@@ -27,8 +26,7 @@ def detail(request, slug):
     eiusmod tempor incididunt ut labore et dolore magna aliqua.
     """
     recipe = get_object_or_404(Recipe, slug=slug)
-    return render_to_response('recipes/detail.html', {'object': recipe},
-        context_instance=RequestContext(request))
+    return render(request, 'recipes/detail.html', {'object': recipe})
 
 
 @login_required

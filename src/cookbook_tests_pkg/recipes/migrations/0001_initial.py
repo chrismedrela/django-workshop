@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('time_for_preparation', models.IntegerField(help_text=b'Time in minutes', null=True, verbose_name=b'Time for preparation', blank=True)),
                 ('number_of_portions', models.PositiveIntegerField(verbose_name=b'Number of portions')),
                 ('difficulty', models.SmallIntegerField(default=2, verbose_name=b'Difficulty', choices=[(1, b'simple'), (2, b'normal'), (3, b'hard')])),
-                ('photo', models.ImageField(upload_to=b'recipes', verbose_name=b'Photo')),
+                ('photo', models.ImageField(upload_to=b'recipes', verbose_name=b'Photo', blank=True, null=True)),
                 ('date_created', models.DateTimeField(editable=False)),
                 ('date_updated', models.DateTimeField(editable=False)),
                 ('author', models.ForeignKey(verbose_name=b'Author', to=settings.AUTH_USER_MODEL)),

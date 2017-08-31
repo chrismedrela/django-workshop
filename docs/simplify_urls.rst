@@ -19,9 +19,11 @@ So we put an empty file named :file:`urls.py` inside the application
 
     from django.conf.urls import include, url
 
+    import recipes.views
+
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', 'recipes.views.detail'),
-        url(r'^$', 'recipes.views.index'),
+        url(r'^recipe/(?P<slug>[-\w]+)/$', recipes.views.detail),
+        url(r'^$', recipes.views.index),
     ]
 
 The two URLs we take from the URLconf of the project.
@@ -58,7 +60,7 @@ Expand the URLconf of the application
 First, we give the URLs in the URLconf of the application a name:
 
 .. literalinclude:: ../src/cookbook_improved/recipes/urls.py
-    :lines: 3-7
+    :lines: 1-9
 
 The function ``url`` accepts an argument ``name`` to specify the name of
 an URL. Normally, the name is constructed after the APPLICATION_MODEL_VIEW
@@ -99,7 +101,7 @@ In the template :file:`recipes/templates/recipes/detail.html` we add a
 link to the overview:
 
 .. literalinclude:: ../src/cookbook_improved/recipes/templates/recipes/detail.html
-    :lines: 12-14
+    :lines: 12-15
     :emphasize-lines: 2
     :language: html+django
 

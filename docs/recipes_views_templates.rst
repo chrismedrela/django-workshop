@@ -19,11 +19,11 @@ Define URLs
 
 First we define the URLs that are used for calling the different views.
 For now, we want to create two URLs. Jump to the file :file:`urls.py`
-and add at the end of ``urlpatterns`` the following two lines:
+and add at the end of ``urlpatterns`` the following three lines:
 
 .. literalinclude:: ../src/cookbook/cookbook/urls.py
     :linenos:
-    :emphasize-lines: 12-13
+    :emphasize-lines: 6, 10-11
 
 ..  note::
 
@@ -39,13 +39,11 @@ and add at the end of ``urlpatterns`` the following two lines:
     At `RegexPlanet <http://www.regexplanet.com/advanced/python/index.html>`_
     you can test regular expressions directly in the browser.
 
-Now you start the development server:
+Now if you try to start the development server:
 
-.. literalinclude:: runserver.log
+.. literalinclude:: runserver-noview.log
 
-Calling the URL http://127.0.0.1:8000/ shows a ``ViewDoesNotExist``
-Exception. That's right, because until now you still have no view
-written. But it shows that your URL works.
+It results in an error, because until now you still have no view written.
 
 How to render a template?
 =========================
@@ -57,8 +55,6 @@ Django templates are simple Python objects whose constructor expectes a
 string. With the help of a context object the placeholders in the
 template are replaced by the desired values.
 
-The first example shows how to use a dictionary as a data structure:
-
 ::
 
     $ python manage.py shell
@@ -69,13 +65,23 @@ The first example shows how to use a dictionary as a data structure:
     :file:`settings.py` for the current project, which would not happen
     if you had simply typed :program:`python`.
 
+.. note::
+
+    You may want to install enhanced Python interactive console that gives better experience:
+
+    ::
+
+        $ pip install ipython
+
+The first example shows how to use a dictionary as a data structure:
+
 .. doctest::
 
     >>> from django.template import Context, Template
     >>> t = Template('My name is {{ person.first_name }}.')
     >>> d = {'person': {'first_name': 'Alice'}}
     >>> t.render(Context(d))
-    u'My name is Alice.'
+    'My name is Alice.'
 
 In the second example, we use a simple Python object as a data structure:
 
@@ -87,7 +93,7 @@ In the second example, we use a simple Python object as a data structure:
     >>> p.first_name = 'Bob'
     >>> c = Context({'person': p})
     >>> t.render(c)
-    u'My name is Bob.'
+    'My name is Bob.'
 
 Lists can also be used:
 
@@ -96,7 +102,7 @@ Lists can also be used:
     >>> t = Template('First article: {{ articles.0 }}')
     >>> c = Context({'articles': ['bread', 'eggs', 'milk']})
     >>> t.render(c)
-    u'First article: bread'
+    'First article: bread'
 
 Write the first view
 ====================
@@ -115,6 +121,10 @@ view, which does this:
 
     def index(request):
         return HttpResponse('My first view.')
+
+    def detail(request, slug):
+        return HttpResponse('My second view.')
+
 
 .. testcode::
     :hide:
@@ -135,7 +145,7 @@ Now we will replace the string with a ``Template`` and render it with a
 will then return the string rendered by the ``Template``:
 
 .. literalinclude:: ../src/cookbook/recipes/views.py
-    :lines: 2-12
+    :lines: 2-16
 
 If you now call http://127.0.0.1:8000/ a ``TemplateDoesNotExist``
 exception is raised. Sure - you didn't create the template yet.
@@ -170,12 +180,13 @@ Now your directory structure should look like this:
     |   |-- settings.py
     |   |-- urls.py
     |   `-- wsgi.py
-    |-- default.db
+    |-- db.sqlite3
     |-- manage.py
     |-- media
     |-- recipes
     |   |-- __init__.py
     |   |-- admin.py
+    |   |-- apps.py
     |   |-- migrations
     |   │   |-- 0001_initial.py
     |   │   `-- __init__.py
@@ -184,7 +195,7 @@ Now your directory structure should look like this:
     |   |-- models.py
     |   |-- templates
     |   |   `-- recipes
-    |   |       `-- recipe.html
+    |   |       `-- index.html
     |   |-- tests.py
     |   `-- views.py
     |-- static
@@ -208,11 +219,12 @@ First you need an additional import at the beginning of the file
 At the end of the file comes a new function for the new view:
 
 .. literalinclude:: ../src/cookbook/recipes/views.py
-    :lines: 15-22
+    :lines: 15-26
 
 The entire file now looks like this:
 
 .. literalinclude:: ../src/cookbook/recipes/views.py
+    :lines: 1-14, 19-26
     :linenos:
 
 Create a second template
@@ -239,24 +251,9 @@ To see anyway, if a variable has not been rendered, one can define the option
 ``string_if_invalid`` for Django's template backend in the configuration
 :file:`settings.py` which in this case appears:
 
-::
-
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [os.path.join(BASE_DIR, 'templates')],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                ],
-                'string_if_invalid': 'TEMPLATE NAME ERROR: %s not found',
-            },
-        },
-    ]
+.. literalinclude:: ../src/cookbook/cookbook/settings.py
+    :lines: 56-71
+    :emphasize-lines: 13
 
 This setting should be disabled again in a production environment.
 

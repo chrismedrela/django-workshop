@@ -24,12 +24,13 @@ Because the application will manage recipes we will call it
     $ cd cookbook
     $ python manage.py startapp recipes
 
-This command will create a directory :file:`recipes` containing these six files
+This command will create a directory :file:`recipes` containing these seven files
 and an additional directory::
 
     recipes
     |-- __init__.py
     |-- admin.py
+    |-- apps.py
     |-- migrations
     │   `-- __init__.py
     |-- models.py
@@ -73,7 +74,7 @@ Let's start with the second model for the recipes:
 .. literalinclude:: ../src/cookbook/recipes/models.py
     :lines: 21-22, 31-45
 
-We habe to add another ``import`` for the ``User`` class:
+We have to add another ``import`` for the ``User`` class:
 
 .. literalinclude:: ../src/cookbook/recipes/models.py
     :lines: 2
@@ -84,7 +85,7 @@ Add some constants for the ``difficulty`` field at the top of the class:
     :lines: 21-30
     :emphasize-lines: 3-10
 
-Again we have to add a ``Meta`` class and a ``__unicode__``  method
+Again we have to add a ``Meta`` class and a ``__str__``  method
 for the ``Recipe`` class:
 
 .. literalinclude:: ../src/cookbook/recipes/models.py

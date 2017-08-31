@@ -12,8 +12,8 @@ in :file:`recipes/urls.py`:
 
 ::
 
-    url(r'^create/$', 'recipes.views.create', name='recipes_recipe_create'),
-    url(r'^edit/(?P<recipe_id>\d+)/$', 'recipes.views.edit', name='recipes_recipe_edit'),
+    url(r'^create/$', recipes.views.create, name='recipes_recipe_create'),
+    url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.edit, name='recipes_recipe_edit'),
 
 The full URLconf looks like this:
 
@@ -21,11 +21,13 @@ The full URLconf looks like this:
 
     from django.conf.urls import include, url
 
+    import recipes.views
+
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', 'recipes.views.detail', name='recipes_recipe_detail'),
-        url(r'^create/$', 'recipes.views.create', name='recipes_recipe_create'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', 'recipes.views.edit', name='recipes_recipe_edit'),
-        url(r'^$', 'recipes.views.index', name='recipes_recipe_index'),
+        url(r'^recipe/(?P<slug>[-\w]+)/$', recipes.views.detail, name='recipes_recipe_detail'),
+        url(r'^create/$', recipes.views.create, name='recipes_recipe_create'),
+        url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.edit, name='recipes_recipe_edit'),
+        url(r'^$', recipes.views.index, name='recipes_recipe_index'),
     ]
 
 Create a form
@@ -83,17 +85,6 @@ Then you add the view to create a new recipe:
             form = RecipeForm()
         context = {'form': form, 'create': True}
         return render(request, 'recipes/form.html', context)
-
-Instead of using the :ref:`already known <using_request_context>` shortcut
-``render_to_response()`` we use the new shortcut ``render()``. It was added
-with Django 1.3 and  generates the ``RequestContext`` automtically from the
-first argument ``request``. The code for ``render_to_response()`` would look
-like so:
-
-::
-
-    return render_to_response('recipes/form.html',
-        {'form': form, 'create': True}, context_instance=RequestContext(request))
 
 If POST data is available it will be used to create the ``RecipeForm``
 instance. Thereafter, it is checked whether the data is valid or not. When the
@@ -180,7 +171,7 @@ with a link to edit the recipe:
 
 ..  code-block:: html+django
 
-    <a href="{% url 'recipes_recipe_edit' object.pk %}">Edit recipe</a>
+    <p><a href="{% url 'recipes_recipe_edit' object.pk %}">Edit recipe</a></p>
 
 And add a link to create a recipe to
 :file:`userauth/templates/userauth/toggle_login.html`:

@@ -18,18 +18,23 @@ configuration directory and create in the following class:
     from django.shortcuts import render
 
 
-    RE_REJECTED_AGENTS = re.compile(r'(msie 6\.0|yahoo! slurp)', re.IGNORECASE)
+    RE_REJECTED_AGENTS = re.compile(r'(msie 6\.0|yahoo! slurp|Chrome)', re.IGNORECASE)
 
 
-    class RejectMiddleware(object):
+    class RejectMiddleware:
         """Middleware to reject specific user agents."""
-        def process_request(self, request):
+
+        def __init__(self, get_response):
+            self.get_response = get_response
+
+        def __call__(self, request):
             if 'HTTP_USER_AGENT' in request.META:
                 user_agent = request.META['HTTP_USER_AGENT']
                 if RE_REJECTED_AGENTS.search(user_agent.lower()):
                     ctx = {'user_agent': user_agent}
                     return render(request, 'reject.html', ctx)
-            return None
+
+            return self.get_response(request)
 
 The template that will be rendered in the event of rejection should be put in
 :file:`templates/reject.html`:
