@@ -204,6 +204,19 @@ following command you can start it:
 
     >>> exit()
 
+Display SQL queries
+-------------------
+
+If you want to display SQL queries that are executed in the shell, use the
+following snippet of code:
+
+::
+
+    import logging
+    l = logging.getLogger('django.db.backends')
+    l.setLevel(logging.DEBUG)
+    l.addHandler(logging.StreamHandler())
+
 Delete the test data and restore the backup
 ===========================================
 
