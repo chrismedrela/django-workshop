@@ -219,7 +219,7 @@ First you need an additional import at the beginning of the file
 At the end of the file comes a new function for the new view:
 
 .. literalinclude:: ../src/cookbook/recipes/views.py
-    :lines: 15-26
+    :lines: 19-26
 
 The entire file now looks like this:
 
