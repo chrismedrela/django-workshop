@@ -1,6 +1,6 @@
 # encoding: utf-8
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils.timezone import now
 
@@ -40,7 +40,7 @@ class Recipe(models.Model):
     difficulty = models.SmallIntegerField('Difficulty',
         choices=DIFFICULTIES, default=DIFFICULTY_MEDIUM)
     category = models.ManyToManyField(Category, verbose_name='Categories')
-    author = models.ForeignKey(User, verbose_name='Author')
+    author = models.ForeignKey(User, verbose_name='Author', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='recipes', verbose_name='Photo', blank=True, null=True)
     date_created = models.DateTimeField(editable=False)
     date_updated = models.DateTimeField(editable=False)

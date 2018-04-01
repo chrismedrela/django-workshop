@@ -27,7 +27,8 @@ needs_sphinx = '1.2'
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.doctest', 'sphinx.ext.extlinks', 'sphinx.ext.todo',
-    'sphinxcontrib.googleanalytics', 'sphinx.ext.graphviz',
+    # 'sphinxcontrib.googleanalytics', 
+    'sphinx.ext.graphviz',
     'sphinxcontrib.programoutput', 'sphinx.ext.ifconfig', 'releases']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -241,10 +242,10 @@ man_pages = [
 # nothing. The default is False.
 todo_include_todos = False
 
-extlinks = {'djangodocs': ('https://docs.djangoproject.com/en/1.11/%s', None)}
+extlinks = {'djangodocs': ('https://docs.djangoproject.com/en/2.0/%s', None)}
 
 rst_epilog = """
-.. |djangoversion| replace:: 1.11
+.. |djangoversion| replace:: 2.0.3
 """
 
 linkcheck_ignore = [
@@ -258,8 +259,8 @@ linkcheck_ignore = [
 locale_dirs = ['locale/']
 
 # Google Analytics
-googleanalytics_enabled = True
-googleanalytics_id = 'UA-35530227-1'
+# googleanalytics_enabled = True
+# googleanalytics_id = 'UA-35530227-1'
 
 # Configuration for sphinx.ext.doctest.
 doctest_path = [os.path.abspath('../src/cookbook')]

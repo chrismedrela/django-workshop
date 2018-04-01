@@ -273,7 +273,7 @@ Then this HTML would be generated:
 
 ..  code-block:: html
 
-    <p>&lt;script&gt;alert(&#39;The best recipe in the <world!&#39;)&lt;/script&gt;</p>
+    <p>&lt;script&gt;alert(&#39;The best recipe in the world!&#39;)&lt;/script&gt;</p>
     <p>Heat the water in the pot to 100 °C.</p>
 
 The JavaScript code would therefore not be executed.

@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('photo', models.ImageField(upload_to=b'recipes', verbose_name=b'Photo', blank=True, null=True)),
                 ('date_created', models.DateTimeField(editable=False)),
                 ('date_updated', models.DateTimeField(editable=False)),
-                ('author', models.ForeignKey(verbose_name=b'Author', to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(verbose_name=b'Author', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
                 ('category', models.ManyToManyField(to='recipes.Category', verbose_name=b'Categories')),
             ],
             options={

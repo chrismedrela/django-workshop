@@ -86,12 +86,12 @@ Disadvantages
 Different ways of running the tests
 ===================================
 
-To get a more detailed output use the :option:`-v2` option:
+To get a more detailed output use the ``-v2`` option:
 
 .. command-output:: python manage.py test recipes -v2
     :cwd: ../src/cookbook_tests
 
-Use the :option:`-v0` option to hide most of the output, passing no arguments
+Use the ``-v0`` option to hide most of the output, passing no arguments
 to the ``test`` command executes all tests:
 
 .. command-output:: python manage.py test -v0
@@ -112,7 +112,7 @@ You can also provide a path to a directory to discover tests below that director
 .. command-output:: python manage.py test recipes/
     :cwd: ../src/cookbook_tests
 
-You can specify a custom filename pattern match using the :option:`-p` (or :option:`--pattern`)
+You can specify a custom filename pattern match using the ``-p`` (or ``--pattern``)
 option, if your test files are named differently from the :file:`test*.py` pattern:
 
 ::

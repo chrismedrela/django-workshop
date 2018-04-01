@@ -20,7 +20,7 @@ Therefore Python needs to be installed first.
     supports Python 3.
 
 You can find out which version of Python you're running by using the
-command line option :option:`-V`:
+command line option ``-V``:
 
 .. command-output:: python -V
 
@@ -79,7 +79,7 @@ Windows 7
    :guilabel:`Advanced System Settings`
 #. A further window will open, click the
    :guilabel:`Environment Variables`
-#. Under `System Variables`, select the :option:`PATH`
+#. Under `System Variables`, select the ``PATH``
 #. Now click on :guilabel:`Edit` and add the required directory:
    ``;C:\Python27\;C:\Python27\Scripts;``. (The semi-colon at the
    beginning is required!)
@@ -91,7 +91,7 @@ Windows XP
 
 #. :menuselection:`Start --> Control Panel --> System --> Advanced`
 #. Click on the :guilabel:`Environment Variables`, then a new window
-   will open. Under "System Variables" select :option:`Path`
+   will open. Under "System Variables" select ``Path``
 #. Now click on :guilabel:`Edit` and add the required directory:
    ``;C:\Python27\;C:\Python27\Scripts;``. (The semi-colon at the
    beginning is required!)
