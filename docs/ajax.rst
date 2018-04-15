@@ -56,11 +56,8 @@ First, we add the corresponding new URL for the ``autocomplete`` view in
 ::
 
     urlpatterns = [
-        url(r'^autocomplete/$', 'recipes.views.autocomplete', name='recipes_recipe_autocomplete'),
-        url(r'^recipe/(?P<slug>[-\w]+)/$', 'recipes.views.detail', name='recipes_recipe_detail'),
-        url(r'^add/$', 'recipes.views.add', name='recipes_recipe_add'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', 'recipes.views.edit', name='recipes_recipe_edit'),
-        url(r'^$', 'recipes.views.index', name='recipes_recipe_index'),
+        path('autocomplete/', recipes.views.autocomplete, name='recipes_recipe_autocomplete'),
+        ...
     ]
 
 Then we write the appropriate view in :file:`recipes/views.py` that uses the
@@ -76,11 +73,11 @@ GET parameter ``term`` to search the database:
         term = request.GET.get('term')
         if term:
             recipes = Recipe.objects.filter(title__icontains=term).order_by('title')
-            titles = recipes.values_list('title', flat=True)[:20]
+            titles = list(recipes.values_list('title', flat=True)[:20])
             content = json.dumps(titles, ensure_ascii=False)
         else:
             content = ''
-        return HttpResponse(content, mimetype='application/json; charset=utf-8')
+        return HttpResponse(content, content_type='application/json; charset=utf-8')
 
 If you now call the ``autocomplete`` URL, the titles of all recipes are
 displayed as JSON, which contain the word "cake".
@@ -105,12 +102,9 @@ Add an URL for the view `search` to :file:`recipes/urls.py` right below the
 ::
 
     urlpatterns = [
-        url(r'^autocomplete/$', 'recipes.views.autocomplete', name='recipes_recipe_autocomplete'),
-        url(r'^search/$', 'recipes.views.search', name='recipes_recipe_search'),
-        url(r'^recipe/(?P<slug>[-\w]+)/$', 'recipes.views.detail', name='recipes_recipe_detail'),
-        url(r'^add/$', 'recipes.views.add', name='recipes_recipe_add'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', 'recipes.views.edit', name='recipes_recipe_edit'),
-        url(r'^$', 'recipes.views.index', name='recipes_recipe_index'),
+        path('autocomplete/', recipes.views.autocomplete, name='recipes_recipe_autocomplete'),
+        path('search/', recipes.views.search, name='recipes_recipe_search'),
+        ...
     ]
 
 Add the corresponding view to :file:`recipes/views.py`:
@@ -192,7 +186,7 @@ First, we add the new CSS and JavaScript from jQuery UI to the template
     <body>
       ...
       <script src="{% static "js/vendor/jquery-1.11.2.min.js" %}"></script>
-      <script src="{% static "jquery-ui-1.11.4.custom/jquery-ui.min.js" %}"></script>
+      <script src="{% static "jquery-ui-1.12.1.custom/jquery-ui.min.js" %}"></script>
       ...
     </body>
 

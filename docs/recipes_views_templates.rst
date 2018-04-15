@@ -25,20 +25,6 @@ and add at the end of ``urlpatterns`` the following three lines:
     :linenos:
     :emphasize-lines: 6, 10-11
 
-..  note::
-
-    The first argument of the ``url()`` function is a `raw string
-    <http://docs.python.org/reference/lexical_analysis.html#string-literals>`_,
-    which contains a regular expression.
-
-    If you encounter regular expressions for the first time, you can
-    learn more about it in the `Regular-Expression-HOWTO
-    <http://docs.python.org/howto/regex.html>`_, on `Regular Expressions.info
-    <http://www.regular-expressions.info/>`_ or in the `article by Doug
-    Hellmann about the re-Modul <http://www.doughellmann.com/PyMOTW/re/>`_.
-    At `RegexPlanet <http://www.regexplanet.com/advanced/python/index.html>`_
-    you can test regular expressions directly in the browser.
-
 Now if you try to start the development server:
 
 .. literalinclude:: runserver-noview.log
@@ -252,7 +238,7 @@ To see anyway, if a variable has not been rendered, one can define the option
 :file:`settings.py` which in this case appears:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 56-71
+    :lines: 55-70
     :emphasize-lines: 13
 
 This setting should be disabled again in a production environment.

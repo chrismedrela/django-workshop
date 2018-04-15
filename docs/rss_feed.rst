@@ -9,7 +9,7 @@ currently no front-end and will therefore get a
 Create the Feed
 ===============
 
-For this you create first :file:`news/feeds.py` X:
+For this you create first :file:`news/feeds.py`:
 
 .. literalinclude:: ../src/cookbook_multi_db/news/feeds.py
     :linenos:
@@ -30,14 +30,19 @@ Then you create the ``URLconf`` in :file:`news/urls.py`:
 And add it afterwards to the ``URLConf`` in :file:`cookbook/urls.py`:
 
 .. literalinclude:: ../src/cookbook_multi_db/cookbook/urls.py
-    :lines: 8-21
-    :emphasize-lines: 12
+    :lines: 10-15
+    :emphasize-lines: 4
 
-You'll also have to equip the ``News`` model in :file:`news/models.py`
-with a ``get_absolute_url`` method:
+Make sure that ``News`` model in :file:`news/models.py`
+has ``get_absolute_url`` method:
 
 .. literalinclude:: ../src/cookbook_multi_db/news/models.py
-    :lines: 19-21
+    :lines: 20-21
+
+Do not forget about this import:
+
+.. literalinclude:: ../src/cookbook_multi_db/news/models.py
+    :lines: 3
 
 Write the Views
 ===============
@@ -53,21 +58,24 @@ Create Templates
 And at the end you put on the new templates and will broaden the existing.
 
 First, expand the template :file:`templates/base.html` to the entry for
-the feed:
+the feed::
 
-Zuerst das Template :file:`templates/base.html` um den Eintrag für den Feed erweitern:
-
-.. literalinclude:: ../src/cookbook_multi_db/templates/base.html
-    :lines: 3-8
-    :language: html+django
+    <head>
+        ...
+        <link rel="alternate" type="application/rss+xml"
+              title="News from the cookbook" href="{% url 'news_article_feed' %}" />
+    </head>
 
 Many browsers show the link to the RSS feed in the address bar only
 after the installation of additional extensions. Therefore, it may be
-useful to add the link to RSS feed also to the ``body`` of the page:
+useful to add the link to RSS feed also to the ``body`` of the page::
 
-.. literalinclude:: ../src/cookbook_multi_db/templates/base.html
-    :lines: 10-11
-    :language: html+django
+    <div id="navbar" class="navbar-collapse collapse">
+        ...
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'news_article_feed' %}">RSS Feed</a></li>
+        </ul>
+    </div>
 
 Then, create the template for the list elements of the feed in
 :file:`news/templates/news/article_list.html`. The filter

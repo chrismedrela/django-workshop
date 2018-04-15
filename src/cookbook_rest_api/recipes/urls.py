@@ -7,7 +7,7 @@ v1_api = Api(api_name='v1')
 v1_api.register(UserResource())
 v1_api.register(RecipeResource())
 
-urlpatterns = patterns('recipes.views',
+urlpatterns = ['recipes.views',
     url(r'^recipe/(?P<slug>[-\w]+)/$', 'detail', name='recipes_recipe_detail'),
     url(r'^$', 'index', name='recipes_recipe_index'),
 )

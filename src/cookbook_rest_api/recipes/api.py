@@ -4,7 +4,7 @@ from tastypie.authorization import Authorization
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
-from .models import Recipe
+from recipes.models import Recipe
 
 
 class UserResource(ModelResource):

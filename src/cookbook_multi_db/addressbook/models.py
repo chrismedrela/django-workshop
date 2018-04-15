@@ -7,14 +7,14 @@ class Address(models.Model):
     last_name = models.CharField(max_length=100)
     street = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=5)
-    city = models.ForeignKey('City')
+    city = models.ForeignKey('City', models.DO_NOTHING)
 
     class Meta:
         db_table = u'address'
         managed = False
 
-    def __unicode__(self):
-        return u'%s %s' % (self.first_name, self.last_name)
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
 
 
 class City(models.Model):
@@ -22,8 +22,8 @@ class City(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        db_table = u'city'
+        db_table = 'city'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

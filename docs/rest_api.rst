@@ -22,47 +22,31 @@ The first step is to install the Python package::
      XML serializer, YAML serializer or the ApiKey authentication,
      additional Python packages must be installed manually.
 
-After that you add ``tastypie`` to the ``INSTALLED_APPS``:
+After that you add ``tastypie`` to the ``INSTALLED_APPS``::
 
-.. literalinclude:: ../src/cookbook_rest_api/cookbook/settings.py
-    :lines: 121-134
-    :emphasize-lines: 13
+    INSTALLED_APPS = [
+        ...
+        'tastypie',
+    ]
+
+In ``settings.py`` you can allow human-readable YAML format::
+
+    TASTYPIE_DEFAULT_FORMATS = ['json', 'xml', 'yaml']
+
+If we want to use YAML format, we also need to install pyyaml::
+
+    $ pip install pyyaml
 
 As a last step you have to generate the necessary database structures:
 
 ::
 
     $ python manage.py migrate tastypie
-    Syncing...
-    Creating tables ...
-    Installing custom SQL ...
-    Installing indexes ...
-    Installed 0 object(s) from 0 fixture(s)
-    Migrating...
-    Running migrations for tastypie:
-     - Migrating forwards to 0001_initial.
-     > tastypie:0001_initial
-     - Loading initial data for tastypie.
-    Installed 0 object(s) from 0 fixture(s)
-
-    Synced:
-     > django.contrib.auth
-     > django.contrib.contenttypes
-     > django.contrib.sessions
-     > django.contrib.sites
-     > django.contrib.messages
-     > django.contrib.staticfiles
-     > django.contrib.admin
-     > django.contrib.admindocs
-     > debug_toolbar
-     > south
-     > userauth
-     > addressbook
-
-    Migrated:
-     - tastypie
-     - recipes
-     - news
+    Operations to perform:
+      Apply all migrations: tastypie
+    Running migrations:
+      Applying tastypie.0001_initial... OK
+      Applying tastypie.0002_api_access_url_length... OK
 
 Creating a resource
 ===================
@@ -79,15 +63,14 @@ Now you have to bind the ``RecipeResource`` to a URL in
 
 ::
 
-    from .api import RecipeResource
+    from recipes.api import RecipeResource
 
     recipe_resource = RecipeResource()
 
-    # other urlpatterns...
-
-    urlpatterns += patterns('',
-        url(r'^api/', include(recipe_resource.urls)),
-    )
+    urlpatterns = [
+        ...
+        path('api/', include(recipe_resource.urls)),
+    ]
 
 You can now access various resources:
 
@@ -99,9 +82,10 @@ You can now access various resources:
 In order to work more easily in the browser with the API, the
 installation of one or more extensions is recommended:
 
-* `JSONView <http://jsonview.com/>`_ (für Chrome und Firefox)
-* `cREST Client <https://chrome.google.com/webstore/detail/crest-client/baedhhmoaooldchehjhlpppaieoglhml>`_ (für Chrome)
-* `Poster <https://addons.mozilla.org/en-US/firefox/addon/poster/>`_ (für Firefox)
+* `Postman <https://app.getpostman.com/app/download/>`_ (a desktop application)
+* `JSONView <http://jsonview.com/>`_ (for Chrome and Firefox)
+* `cREST Client <https://chrome.google.com/webstore/detail/crest-client/baedhhmoaooldchehjhlpppaieoglhml>`_ (for Chrome)
+* `Poster <https://addons.mozilla.org/en-US/firefox/addon/poster/>`_ (for Firefox)
 
 Of course, you can also use `cURL <http://curl.haxx.se/>`_ on the
 commandline.
@@ -113,11 +97,14 @@ allowed:
 ::
 
     $ curl -IX DELETE http://127.0.0.1:8000/api/recipe/1/
-    HTTP/1.0 401 UNAUTHORIZED
-    Date: Sat, 13 Oct 2012 11:22:43 GMT
-    Server: WSGIServer/0.1 Python/2.6.6
-    Vary: Cookie
+    HTTP/1.1 401 Unauthorized
+    Date: Mon, 09 Apr 2018 04:22:12 GMT
+    Server: WSGIServer/0.2 CPython/3.6.4
     Content-Type: text/html; charset=utf-8
+    X-Frame-Options: SAMEORIGIN
+    Content-Length: 0
+    Vary: Accept-Language, Cookie
+    Content-Language: en
 
 As you can see, the result of a DELETE request is "401 UNAUTHORIZED".
 For security reasons only read access is allowed. Write access must be
@@ -127,10 +114,19 @@ Extend authorization
 ====================
 
 To perform POST/PUT/DELETE operations, you need to extend the
-authorization of the resource:
+authorization of the resource::
 
-.. literalinclude:: ../src/cookbook_rest_api/recipes/api.py
-    :lines: 3, 5-6, 7-9, 21, 24-27
+    from tastypie.authorization import Authorization
+    from tastypie.resources import ModelResource
+
+    from recipes.models import Recipe
+
+
+    class RecipeResource(ModelResource):
+        class Meta:
+            queryset = Recipe.objects.all()
+            resource_name = 'recipe'
+            authorization = Authorization()
 
 .. warning::
 
@@ -173,10 +169,21 @@ can change this by enabling a new resource for the user in
     :lines: 1-3, 5-13, 19-27
 
 Now you just have to integrate this new resource into
-:file:`recipes/urls.py`, replacing the old API URL:
+:file:`recipes/urls.py`, replacing the old API URL::
 
-.. literalinclude:: ../src/cookbook_rest_api/recipes/urls.py
-    :emphasize-lines: 2-8, 15-17
+    from django.urls import include, path
+    from tastypie.api import Api
+
+    from recipes.api import RecipeResource, UserResource
+
+    v1_api = Api(api_name='v1')
+    v1_api.register(UserResource())
+    v1_api.register(RecipeResource())
+
+    urlpatterns = [
+        ...
+        path('api/', include(v1_api.urls)),
+    ]
 
 Afterwards there is more data available than previously and in addition
 we have the API versioned:
@@ -216,8 +223,8 @@ In addition, we only want to allow read access to the ``User`` resource:
 .. literalinclude:: ../src/cookbook_rest_api/recipes/api.py
     :lines: 10-15
 
-Filter ressources
-=================
+Filter resources
+================
 
 With some additional configuration, it is also possible to filter
 resources:

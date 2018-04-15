@@ -12,22 +12,22 @@ in :file:`recipes/urls.py`:
 
 ::
 
-    url(r'^create/$', recipes.views.create, name='recipes_recipe_create'),
-    url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.edit, name='recipes_recipe_edit'),
+    path('create/', recipes.views.create, name='recipes_recipe_create'),
+    path('edit/<int:recipe_id>/', recipes.views.edit, name='recipes_recipe_edit'),
 
 The full URLconf looks like this:
 
 ::
 
-    from django.conf.urls import include, url
+    from django.urls import include, path
 
     import recipes.views
 
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', recipes.views.detail, name='recipes_recipe_detail'),
-        url(r'^create/$', recipes.views.create, name='recipes_recipe_create'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.edit, name='recipes_recipe_edit'),
-        url(r'^$', recipes.views.index, name='recipes_recipe_index'),
+        path('recipe/<str:slug>/', recipes.views.detail, name='recipes_recipe_detail'),
+        path('create/', recipes.views.create, name='recipes_recipe_create'),
+        path('edit/<int:recipe_id>)/', recipes.views.edit, name='recipes_recipe_edit'),
+        path('', recipes.views.index, name='recipes_recipe_index'),
     ]
 
 Create a form

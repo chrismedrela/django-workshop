@@ -10,10 +10,12 @@ must first be activated.
 
 
 #. Activate the app ``django.contrib.admindocs`` in ``INSTALLED_APPS``.
-#. Activate the URL ``(r'^admin/doc/', include('django.contrib.admindocs.urls'))`` in ``cookbook/urls.py``. Make sure that it's positioned **before** the URL ``r'^admin/'``!
-#. Install the `docutils <http://docutils.sourceforge.net/>`_ package::
+#. Add in ``cookbook/urls.py``. Make sure that it's positioned **before** the URL ``'admin/'``::
 
-    $ pip install docutils
+    urlpatterns = [
+        path('admin/doc /', include('django.contrib.admindocs.urls')),
+        ...
+    ]
 
 Now a new navigation point "documentation" is available at the top right
 of the admin.

@@ -17,13 +17,13 @@ So we put an empty file named :file:`urls.py` inside the application
 
 .. code-block:: python
 
-    from django.conf.urls import include, url
+    from django.urls import path, include
 
     import recipes.views
 
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', recipes.views.detail),
-        url(r'^$', recipes.views.index),
+        path('recipe/<str:slug>/$', recipes.views.detail),
+        path('', recipes.views.index),
     ]
 
 The two URLs we take from the URLconf of the project.
@@ -36,8 +36,8 @@ application from the URLconf of the project. Instead, we need to assign
 the new URLconf of the application to an URL:
 
 .. literalinclude:: ../src/cookbook_improved/cookbook/urls.py
-    :lines: 6-13
-    :emphasize-lines: 7
+    :lines: 8-11
+    :emphasize-lines: 3
     :language: python
 
 You can now test this configuration, the frontend should work as usual.
@@ -60,7 +60,7 @@ Expand the URLconf of the application
 First, we give the URLs in the URLconf of the application a name:
 
 .. literalinclude:: ../src/cookbook_improved/recipes/urls.py
-    :lines: 1-9
+    :lines: 1-8
 
 The function ``url`` accepts an argument ``name`` to specify the name of
 an URL. Normally, the name is constructed after the APPLICATION_MODEL_VIEW

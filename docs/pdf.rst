@@ -23,6 +23,11 @@ to wrap the HTML to PDF conversion. But that's also just a single command:
 
     $ pip install django-wkhtmltopdf
 
+Make sure that it's installed correctly:
+
+    $ wkhtmltopdf --version
+    wkhtmltopdf 0.12.4 (with patched qt)
+
 Finally add ``wkhtmltopdf`` to ``INSTALLED_APPS`` in :file:`settings.py`.
 
 A generic view for PDFs
@@ -55,17 +60,16 @@ Now add the URL ``recipes_recipe_pdf`` to :file:`recipes/urls.py`:
 
 ::
 
-    from . import views
+    from django.urls import include, path
+
+    import recipes.views
 
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', 'recipes.views.detail',
-            name='recipes_recipe_detail'),
-        url(r'^recipe/(?P<slug>[-\w]+)/pdf/$', views.RecipePDFView.as_view(),
-            name='recipes_recipe_pdf'),
-        url(r'^create/$', views.RecipeCreateView.as_view(), name='recipes_recipe_add_class'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', 'recipes.views.edit',
-            name='recipes_recipe_edit'),
-        url(r'^$', views.RecipeListView.as_view(), name='recipes_recipe_list'),
+        path('recipe/<str:slug>/', recipes.views.RecipeDetailView.as_view(), name='recipes_recipe_detail'),
+        path('recipe/<str:slug>/pdf/', recipes.views.RecipePDFView.as_view(), name='recipes_recipe_pdf'),
+        path('create/', recipes.views.RecipeCreateView.as_view(), name='recipes_recipe_create'),
+        path('edit/<int:recipe_id>/', recipes.views.RecipeUpdateView.as_view(), name='recipes_recipe_edit'),
+        path('', recipes.views.RecipeListView.as_view(), name='recipes_recipe_index'),
     ]
 
 Now you just need the HTML template that will be the template for the PDF.
@@ -101,6 +105,6 @@ Now add, as the last step, a link to download the PDF in the template for a reci
 
 .. code-block:: html+django
 
-    <a href="{% url 'recipes_recipe_pdf' object.slug %}">Download recipe as PDF</a>
+    <p><a href="{% url 'recipes_recipe_pdf' object.slug %}">Download recipe as PDF</a></p>
 
 Now you can download the recipe as a PDF!

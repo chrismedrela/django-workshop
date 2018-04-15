@@ -26,10 +26,10 @@ this you expand the file first :file:`settings.py`:
 
 ::
 
-    INSTALLED_APPS = (
+    INSTALLED_APPS = [
         ...
         'userauth',
-    )
+    ]
 
     LOGIN_URL = 'userauth_login'
     LOGOUT_URL = 'userauth_logout'
@@ -51,7 +51,7 @@ the following line:
 
 ::
 
-    url(r'^user/', include(userauth.urls)),
+    path('user/', include(userauth.urls)),
 
 You also need to import the URLConf:
 
@@ -69,26 +69,25 @@ Now we create the file :file:`urls.py` in directory :file:`userauth`:
 
 ::
 
-    from django.conf.urls import include, url
+    from django.urls import include, path, reverse_lazy
     from django.contrib.auth import views as auth_views
-    from django.core.urlresolvers import reverse_lazy
 
     urlpatterns = [
-        url(r'^login/$', auth_views.login,
-            {'template_name': 'userauth/login.html'}, name='userauth_login'),
-        url(r'^logout/$', auth_views.logout, {
+        path('login/', auth_views.login,
+             {'template_name': 'userauth/login.html'}, name='userauth_login'),
+        path('logout/', auth_views.logout, {
                 'next_page': reverse_lazy('recipes_recipe_index'),
-            },
-            name='userauth_logout'),
-        url(r'^password-change/$', auth_views.password_change,
-            {
-                'template_name': 'userauth/password_change_form.html',
-                'post_change_redirect': 'userauth_password_change_done',
-            },
+             },
+             name='userauth_logout'),
+        path('password-change/', auth_views.password_change,
+             {
+                 'template_name': 'userauth/password_change_form.html',
+                 'post_change_redirect': 'userauth_password_change_done',
+             },
             name='userauth_password_change'),
-        url(r'^password-change-done/$', auth_views.password_change_done,
-            {'template_name': 'userauth/password_change_done.html'},
-            name='userauth_password_change_done'),
+        path('password-change-done/', auth_views.password_change_done,
+             {'template_name': 'userauth/password_change_done.html'},
+             name='userauth_password_change_done'),
     ]
 
 It contains the URLs for login and logout as well as changing the password. The
@@ -278,12 +277,12 @@ URLs:
 
     urlpatterns = [
         # ...
-        url(r'^register/$', userauth.views.register,
-            {'next_page_name': 'userauth_register_done'},
-            name='userauth_register'),
-        url(r'^welcome/$',
-            TemplateView.as_view(template_name='userauth/register_done.html'),
-            name='userauth_register_done'),
+        path('register/', userauth.views.register,
+             {'next_page_name': 'userauth_register_done'},
+             name='userauth_register'),
+        path('welcome/',
+             TemplateView.as_view(template_name='userauth/register_done.html'),
+             name='userauth_register_done'),
     ]
 
 The second URL ``userauth_register_done`` uses the generic view
@@ -300,7 +299,7 @@ you open the file :file:`userauth/views.py` and create the following function:
 ::
 
     from django.contrib.auth.forms import UserCreationForm
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
     from django.http import HttpResponseRedirect
     from django.shortcuts import render
 

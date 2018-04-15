@@ -23,7 +23,7 @@ class RecipeViewsTests(TestCase):
         """Test the index view"""
         response = self.client.get(reverse('recipes_recipe_index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Kochbuch', count=2)
+        self.assertContains(response, 'Aglio e Olio', count=1)
         with self.settings(TEMPLATE_STRING_IF_INVALID='INVALID CONTENT'):
             self.assertNotContains(response,
                 'INVALID CONTENT',
@@ -60,7 +60,7 @@ class RecipeViewsTests(TestCase):
         login = self.client.login(username=username, password=password)
         self.assertTrue(login, 'Login as "%s" using password "%s" failed.' %
             (username, password))
-        add_url = reverse('recipes_recipe_add')
+        add_url = reverse('recipes_recipe_create')
         response = self.client.get(add_url)
         self.assertEqual(response.status_code, 200)
         photo_path = os.path.join(settings.BASE_DIR, 'recipes/fixtures/3215317191_209e19288f_t.jpg')
@@ -82,6 +82,6 @@ class RecipeViewsTests(TestCase):
 
     def test_add_login_required(self):
         """Test the add view without an authenticated user"""
-        response = self.client.get(reverse('recipes_recipe_add'))
+        response = self.client.get(reverse('recipes_recipe_create'))
         self.assertEqual(response.status_code, 302)
         self.assertTemplateNotUsed(response, 'recipes/form.html')

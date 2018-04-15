@@ -27,6 +27,13 @@ So we create at first the new app::
 
     $ python manage.py startapp news
 
+We need to add it to INSTALLED_APPS::
+
+    INSTALLED_APPS = [
+        ...
+        'news',
+    ]
+
 The next step is the creation of the abstract model. We put the file
 :file:`basemodels.py` with the following contents into the configuration
 directory:
@@ -73,7 +80,7 @@ At first we create a new migration for the model ``Article``::
 
 Then we run the first migration::
 
-    $ python manage.py migrate --database=newsdb news
+    $ python manage.py migrate news
     Operations to perform:
       Apply all migrations: news
     Running migrations:
@@ -152,6 +159,13 @@ Next, we create an app for the new database::
 
     $ python manage.py startapp addressbook
 
+We need to put it on INSTALLED_APPS::
+
+    INSTALLED_APPS = [
+        ...
+        'addressbook',
+    ]
+
 And let Django create the models from the tables in the database using
 the command :program:`inspectdb`::
 
@@ -191,7 +205,7 @@ In order for the models to work, we adapt it a little (lines 5, 10, 14,
 16-17, 21, 23, 26, 28-29):
 
 ..  literalinclude:: ../src/cookbook_multi_db/addressbook/models.py
-    :emphasize-lines: 5, 10, 14, 16-17, 21, 23, 26, 28-29
+    :emphasize-lines: 5, 16-17, 21, 28-29
     :linenos:
 
 And we need to extend the ``CookbookRouter`` (lines 7-8, 14-15, 21-22):

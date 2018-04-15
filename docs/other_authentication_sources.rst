@@ -6,13 +6,13 @@ An alternative authentication can be implemented in the file
 :file:`userauth/backends.py` as follows::
 
     from django.conf import settings
-    from django.contrib.auth.models import User, check_password
+    from django.contrib.auth.models import User
 
 
     class SettingsBackend():
         """Authenticate against the settings ADMIN_LOGIN and ADMIN_PASSWORD.
 
-        Use the login name, and a hash of the password. This example uses "admin"
+        Use the login name, and password in plain text. This example uses "admin"
         as username and password:
 
         ADMIN_LOGIN = 'admin'
@@ -20,15 +20,13 @@ An alternative authentication can be implemented in the file
         """
         def authenticate(self, username=None, password=None):
             login_valid = (settings.ADMIN_LOGIN == username)
-            pwd_valid = check_password(password, settings.ADMIN_PASSWORD)
+            pwd_valid = (password == settings.ADMIN_PASSWORD)
             if login_valid and pwd_valid:
                 try:
                     user = User.objects.get(username=username)
                 except User.DoesNotExist:
-                    # Create a new user. Note that we can set password
-                    # to anything, because it won't be checked; the password
-                    # from settings.py will.
-                    user = User(username=username, password='get from settings.py')
+                    # Create a new user.
+                    user = User(username=username)
                     user.is_staff = False
                     user.is_superuser = False
                     user.save()
@@ -44,10 +42,10 @@ An alternative authentication can be implemented in the file
 To use the ``SettingsBackend`` the following setting has to be added to
 :file:`cookbook/settings.py`::
 
-    AUTHENTICATION_BACKENDS = (
+    AUTHENTICATION_BACKENDS = [
         'django.contrib.auth.backends.ModelBackend',
-        'cookbook.userauth.backends.SettingsBackend'
-    )
+        'userauth.backends.SettingsBackend',
+    ]
 
 Further links to the Django documentation
 =========================================

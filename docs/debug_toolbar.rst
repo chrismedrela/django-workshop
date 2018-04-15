@@ -88,7 +88,7 @@ file:
     if settings.DEBUG:
         import debug_toolbar
         urlpatterns = [
-            url(r'^__debug__/', include(debug_toolbar.urls)),
+            path('__debug__/', include(debug_toolbar.urls)),
         ] + urlpatterns
 
 And add the following import at the beginning of the file:

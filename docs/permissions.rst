@@ -34,9 +34,9 @@ should be the admin and play with it:
     >>> admin
     <User: admin>
     >>> admin.user_permissions.all()
-    []
+    <QuerySet []>
     >>> admin.groups.all()
-    []
+    <QuerySet []>
     >>> admin.has_perm('recipes.add_recipe')
     True
     >>> admin.has_perm('recipes.add_category')
@@ -161,7 +161,7 @@ be added using ``Meta.permissions``:
 .. note::
 
     If you add permissions after the model has been created in the database you
-    to create a migration for that.
+    need to create a migration for that.
 
 You can also customize the default permissions using ``Meta.default_permissions``:
 

@@ -18,16 +18,16 @@ Some of the most popular WSGI servers are:
 * `modwsgi <https://github.com/GrahamDumpleton/mod_wsgi>`_ - A Python WSGI adapter module for Apache
 * `uWSGI <http://projects.unbit.it/uwsgi/>`_ - A full stack for building hosting services, including a WSGI plugin
 
-We will use the following technologies to deploy our project:
+.. We will use the following technologies to deploy our project:
 
-* `uWSGI <http://projects.unbit.it/uwsgi/>`_
-* `nginx <http://nginx.org/>`_
-* `PostgreSQL <http://postgresql.org/>`_
+   * `uWSGI <http://projects.unbit.it/uwsgi/>`_
+   * `nginx <http://nginx.org/>`_
+   * `PostgreSQL <http://postgresql.org/>`_
 
-We will use `Vagrant <http://vagrantup.com>`_ and
-`VirtualBox <www.virtualbox.org>`_ to simulate a `Debian <http://debian.org/>`_
-server. All required services will be installed and configured using
-`SaltStack <http://saltstack.com/>`_.
+.. We will use `Vagrant <http://vagrantup.com>`_ and
+   `VirtualBox <www.virtualbox.org>`_ to simulate a `Debian <http://debian.org/>`_
+   server. All required services will be installed and configured using
+   `SaltStack <http://saltstack.com/>`_.
 
 .. todo::
 

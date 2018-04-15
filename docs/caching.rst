@@ -169,6 +169,8 @@ from the database.
 
 ::
 
+    from django.utils.functional import cached_property
+
     class Recipe(models.Model):
         ...
 

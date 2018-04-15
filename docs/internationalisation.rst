@@ -93,16 +93,17 @@ a word for translation.
 In a detail view with singular and plural, such as in the template
 :file:`templates/recipes/detail.html`, it looks like this::
 
+    {% extends "base.html" %}
     {% load i18n %}
     ...
     {% blocktrans count object.number_of_portions as number_of_portions %}
-    <p>Ergibt eine Portion.</p>
+    <p>Gives one portion.</p>
     {% plural %}
-    <p>Ergibt {{ number_of_portions }} Portionen.</p>
+    <p>Gives {{ number_of_portions }} portionss.</p>
     {% endblocktrans %}
     ...
     {% blocktrans with object.time_for_preparation as time_for_preparation %}
-    <p>Zubereitungszeit: {{ time_for_preparation }} Minuten</p>
+    <p>Time to prepare (in minutes): {{ time_for_preparation }}</p>
     {% endblocktrans %}
 
 The template tag ``blocktrans`` can be used to mark whole blocks of text
@@ -123,12 +124,12 @@ configuration :file:`settings.py`.
 
 ::
 
-    LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+    LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 Then you can create the message file::
 
     $ mkdir locale
-    $ django-admin.py makemessages -l de
+    $ python manage.py makemessages -l de
 
 Thus, the following directory structure is generated::
 
@@ -166,13 +167,22 @@ Now, start with translating the generated .po file
     "    Ergibt %(number_of_portions)s Portionen.\n"
     "    "
 
+    #: recipes/templates/recipes/detail.html:18
+    #, python-format
+    msgid ""
+    "\n"
+    "<p>Time to prepare (in minutes): %(time_for_preparation)s</p>\n"
+    msgstr ""
+    "\n"
+    "<p>Zubereitungszeit: %(time_for_preparation)s Minuten</p>\n"
+
 Create the .mo file
 -------------------
 
 After the translation was carried out in the .po file, the
 binary .mo file will be generated::
 
-    $ django-admin.py compilemessages
+    $ python manage.py compilemessages
 
 The .mo file will be stored in the same directory as the associated .po
 file::
@@ -230,8 +240,8 @@ available languages in :file:`settings.py`::
     ugettext = lambda s: s
 
     LANGUAGES = (
-        (’de’, ugettext(’German’)),
-        (’en’, ugettext(’English’)),
+        ('de', ugettext('German')),
+        ('en', ugettext('English')),
     )
 
 The ``lambda`` construct is necessary because

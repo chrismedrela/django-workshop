@@ -71,14 +71,14 @@ constant which is preconfigured to use Django's template engine. Add the path
 to the templates directory to the ``DIRS`` list:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 56-67, 69-71
+    :lines: 55-66, 68-70
     :emphasize-lines: 4
 
 The existing database connection ``default`` is already configured to use
 `SQLite <http://www.sqlite.org/>`_, because it's built into Python:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 76-84
+    :lines: 75-83
     :emphasize-lines: 5-8
 
 .. doctest::
@@ -92,7 +92,7 @@ The existing database connection ``default`` is already configured to use
 Next change the timezone and language to suit:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 87-92
+    :lines: 86-91
 
 .. doctest::
     :hide:
@@ -111,7 +111,7 @@ Lastly, the path to the static files and the location for uploaded files must
 be defined:
 
 .. literalinclude:: ../src/cookbook/cookbook/settings.py
-    :lines: 106-111
+    :lines: 105-110
 
 .. doctest::
     :hide:

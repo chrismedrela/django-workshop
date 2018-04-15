@@ -23,7 +23,7 @@ So far, our project only consists of three templates and some Python files. So w
     browser needs to accept the cookies set by the website.
 
 Now you need to adjust the base template :file:`base.html` so that
-Django is able to able to use the right path for the static files.
+Django is able to use the right path for the static files.
 Therefor you will use the :djangodocs:`static <ref/templates/builtins/#static>`
 template tag. Template tags are written this way: ``{% tag %}``. Because
 the tag ``static`` is provided by an app it needs to be loaded first.
@@ -41,7 +41,7 @@ the end of the template :file:`base.html`:
 
 .. literalinclude:: ../src/cookbook_staticfiles/templates/base.html
     :language: html+django
-    :lines: 76-99
+    :lines: 76-90
     :emphasize-lines: 2, 4, 6
 
 Now replace the ``title`` HTML tag with the highlighted line:

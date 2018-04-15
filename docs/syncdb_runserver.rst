@@ -71,7 +71,7 @@ lines at the end of :file:`cookbook/urls.py`:
 
 .. literalinclude:: ../src/cookbook/cookbook/urls.py
     :lines: 1-5, 8-9, 12
-    :emphasize-lines: 1, 3, 12
+    :emphasize-lines: 1, 3, 8
 
 Perform another check
 ---------------------

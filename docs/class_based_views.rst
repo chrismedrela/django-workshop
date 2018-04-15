@@ -42,15 +42,15 @@ two old URLs are removed and replaced by new ones at the end of the file:
 
 ::
 
-    from django.conf.urls import include, url
+    from django.urls import include, path
 
     import recipes.views
 
     urlpatterns = [
-        url(r'^recipe/(?P<slug>[-\w]+)/$', recipes.views.RecipeDetailView.as_view(), name='recipes_recipe_detail'),
-        url(r'^create/$', recipes.views.create, name='recipes_recipe_create'),
-        url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.edit, name='recipes_recipe_edit'),
-        url(r'^$', recipes.views.RecipeListView.as_view(), name='recipes_recipe_index'),
+        path('recipe/<str:slug>/', recipes.views.RecipeDetailView.as_view(), name='recipes_recipe_detail'),
+        path('create/', recipes.views.create, name='recipes_recipe_create'),
+        path('edit/<int:recipe_id>/', recipes.views.edit, name='recipes_recipe_edit'),
+        path('', recipes.views.RecipeListView.as_view(), name='recipes_recipe_index'),
     ]
 
 Converting ``create`` view
@@ -85,7 +85,7 @@ We need to modify URLConf:
 
 ::
 
-    url(r'^create/$', recipes.views.RecipeCreateView.as_view(), name='recipes_recipe_create'),
+    path('create/', recipes.views.RecipeCreateView.as_view(), name='recipes_recipe_create'),
 
 Converting ``edit`` view
 ========================
@@ -121,7 +121,7 @@ And, again, we need to modify URLConf:
 
 ::
 
-    url(r'^edit/(?P<recipe_id>\d+)/$', recipes.views.RecipeUpdateView.as_view(), name='recipes_recipe_edit'),
+    path('edit/<int:recipe_id>/', recipes.views.RecipeUpdateView.as_view(), name='recipes_recipe_edit'),
 
 
 Further links to the Django documentation
