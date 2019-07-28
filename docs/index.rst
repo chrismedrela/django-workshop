@@ -43,6 +43,7 @@ Table of contents
    debug_toolbar
    expand_views
    simplify_urls
+   django_rest_framework
    staticfiles
    error_handling
    debugging
