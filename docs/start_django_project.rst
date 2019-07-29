@@ -33,13 +33,27 @@ After you've created the project, you can change to the directory
 
 And try out the development server with the following command:
 
-.. literalinclude:: runserver-migrationsrequired.log
+::
+
+    $ python manage.py runserver
+    Watching for file changes with StatReloader
+    Performing system checks...
+
+    System check identified no issues (0 silenced).
+
+    You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+    Run 'python manage.py migrate' to apply them.
+
+    July 28, 2019 - 12:50:40
+    Django version 2.2.3, using settings 'cookbook.settings'
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
 
 Now you can open the "Welcome to Django" site from
 http://127.0.0.1:8000/.  After you've opened the site, you can kill the
 development server with :kbd:`CTRL + C`.
 
-.. image:: /images/welcome_to_django.jpg
+.. image:: /images/welcome_to_django.png
     :alt: Welcome to Django
     :align: center
 

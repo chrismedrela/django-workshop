@@ -15,9 +15,9 @@ Therefore Python needs to be installed first.
 
 .. note::
 
-    Django |djangoversion| supports Python from version 2.7 and 3.4+. If you have an
-    older version of Python, you should update it. Since version 1.5 Django
-    supports Python 3.
+    Django |djangoversion| supports Python from version 3.5+. If you have an
+    older version of Python, you should update it. The newest Django version
+    doesn't support Python 2.
 
 You can find out which version of Python you're running by using the
 command line option ``-V``:
@@ -26,7 +26,7 @@ command line option ``-V``:
 
 .. note::
 
-    If you are using Python 3 please make sure you have Python 3.4 or
+    If you are using Python 3 please make sure you have Python 3.5 or
     greater installed. Otherwise there will be problems.
 
     Also consider adding the following future-import on top of every
@@ -68,7 +68,7 @@ Website and install it.
 
 So that Python works under Windows as expected, you need to change the
 environment variable :envvar:`%PATH%`. In the examples, we'll assume
-that your Python is installed in :file:`C:\\Python27\\`.
+that your Python is installed in :file:`C:\\Python37\\`.
 
 Windows 7
 ^^^^^^^^^
@@ -81,7 +81,7 @@ Windows 7
    :guilabel:`Environment Variables`
 #. Under `System Variables`, select the ``PATH``
 #. Now click on :guilabel:`Edit` and add the required directory:
-   ``;C:\Python27\;C:\Python27\Scripts;``. (The semi-colon at the
+   ``;C:\Python37\;C:\Python37\Scripts;``. (The semi-colon at the
    beginning is required!)
 #. Now close the windows :guilabel:`Environment Variables` and
    :guilabel:`System Properties` by clicking on `OK`.
@@ -93,7 +93,7 @@ Windows XP
 #. Click on the :guilabel:`Environment Variables`, then a new window
    will open. Under "System Variables" select ``Path``
 #. Now click on :guilabel:`Edit` and add the required directory:
-   ``;C:\Python27\;C:\Python27\Scripts;``. (The semi-colon at the
+   ``;C:\Python37\;C:\Python37\Scripts;``. (The semi-colon at the
    beginning is required!)
 #. Now close the windows :guilabel:`Environment Variables` and
    :guilabel:`System Properties` by clicking on `OK`.
@@ -106,15 +106,17 @@ Python Package Manager
 
 .. index:: pip
 
-Python has its own `package system <https://pypi.python.org/pypi>`_ to
-manage distribution and installation of Python packages. Because we will
-need to install several packages, we must first install the package manager
-`pip <http://www.pip-installer.org/>`_. :program:`pip` was originally
-written as an improvement of :program:`easy_install`. :program:`pip` can be
-installed with the help from a bootstrap script which can be downloaded
-from `GitHub <https://raw.github.com/pypa/pip/master/contrib/get-pip.py>`_.
-If :program:`curl` is installed, you can use it to download :program:`pip` at
-the command line. Otherwise just use the browser.
+Python has its own `package system <https://pypi.python.org/pypi>`_ to manage
+distribution and installation of Python packages. Because we will need to
+install several packages, we must first install the package manager `pip
+<http://www.pip-installer.org/>`_. :program:`pip` was originally written as an
+improvement of :program:`easy_install`. :program:`pip` should be already
+installed, however if it's not the case, follow the instructions below.
+:program:`pip` can be installed with the help from a bootstrap script which can
+be downloaded from `GitHub
+<https://raw.github.com/pypa/pip/master/contrib/get-pip.py>`_. If
+:program:`curl` is installed, you can use it to download :program:`pip` at the
+command line. Otherwise just use the browser.
 
 ::
 

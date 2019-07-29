@@ -101,8 +101,23 @@ This will create the file :file:`recipes/migrations/0001_initial.py`. It will
 be used to produce the SQL queries from the models, in order to fill the
 database. With the following command you can issue the queries:
 
-.. command-output:: python manage.py sqlmigrate recipes 0001
-    :cwd: ../src/cookbook
+::
+
+    BEGIN;
+    --
+    -- Create model Category
+    --
+    CREATE TABLE "recipes_category" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(100) NOT NULL, "slug" varchar(50) NOT NULL UNIQUE, "description" text NOT NULL);
+    --
+    -- Create model Recipe
+    --
+    CREATE TABLE "recipes_recipe" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(255) NOT NULL, "slug" varchar(50) NOT NULL UNIQUE, "ingredients" text NOT NULL, "preparation" text NOT NULL, "time_for_preparation" integer NULL, "number_of_portions" integer unsigned NOT NULL CHECK ("number_of_portions" >= 0), "difficulty" smallint NOT NULL, "photo" varchar(100) NULL, "date_created" datetime NOT NULL, "date_updated" datetime NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+    CREATE TABLE "recipes_recipe_category" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "recipe_id" integer NOT NULL REFERENCES "recipes_recipe" ("id") DEFERRABLE INITIALLY DEFERRED, "category_id" integer NOT NULL REFERENCES "recipes_category" ("id") DEFERRABLE INITIALLY DEFERRED);
+    CREATE INDEX "recipes_recipe_author_id_7274f74b" ON "recipes_recipe" ("author_id");
+    CREATE UNIQUE INDEX "recipes_recipe_category_recipe_id_category_id_d93d6fd8_uniq" ON "recipes_recipe_category" ("recipe_id", "category_id");
+    CREATE INDEX "recipes_recipe_category_recipe_id_490f820a" ON "recipes_recipe_category" ("recipe_id");
+    CREATE INDEX "recipes_recipe_category_category_id_3d7189cb" ON "recipes_recipe_category" ("category_id");
+    COMMIT;
 
 To run these queries directly and create the tables and indexes you need to run
 the following command.
@@ -117,6 +132,7 @@ the following command.
       Applying auth.0001_initial... OK
       Applying admin.0001_initial... OK
       Applying admin.0002_logentry_remove_auto_add... OK
+      Applying admin.0003_logentry_add_action_flag_choices... OK
       Applying contenttypes.0002_remove_content_type_name... OK
       Applying auth.0002_alter_permission_name_max_length... OK
       Applying auth.0003_alter_user_email_max_length... OK
@@ -125,6 +141,9 @@ the following command.
       Applying auth.0006_require_contenttypes_0002... OK
       Applying auth.0007_alter_validators_add_error_messages... OK
       Applying auth.0008_alter_user_username_max_length... OK
+      Applying auth.0009_alter_user_last_name_max_length... OK
+      Applying auth.0010_alter_group_name_max_length... OK
+      Applying auth.0011_update_proxy_permissions... OK
       Applying recipes.0001_initial... OK
       Applying sessions.0001_initial... OK
 
@@ -146,7 +165,16 @@ Start the Web Development Server
 
 Now you can start the development server:
 
-.. literalinclude:: runserver.log
+::
+
+    Watching for file changes with StatReloader
+    Performing system checks...
+
+    System check identified no issues (0 silenced).
+    July 28, 2019 - 15:15:02
+    Django version 2.2.3, using settings 'cookbook.settings'
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
 
 Using the URL http://127.0.0.1:8000/admin/ you can now access the admin
 application, log in to the superuser you just created and add a few recipes.

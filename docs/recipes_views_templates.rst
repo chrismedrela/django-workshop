@@ -27,7 +27,52 @@ and add at the end of ``urlpatterns`` the following three lines:
 
 Now if you try to start the development server:
 
-.. literalinclude:: runserver-noview.log
+::
+
+    Watching for file changes with StatReloader
+    Performing system checks...
+
+    Exception in thread django-main-thread:
+    Traceback (most recent call last):
+      File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+        self.run()
+      File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/threading.py", line 864, in run
+        self._target(*self._args, **self._kwargs)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 54, in wrapper
+        fn(*args, **kwargs)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 117, in inner_run
+        self.check(display_num_errors=True)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/management/base.py", line 390, in check
+        include_deployment_checks=include_deployment_checks,
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/management/base.py", line 377, in _run_checks
+        return checks.run_checks(**kwargs)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/checks/registry.py", line 72, in run_checks
+        new_errors = check(app_configs=app_configs)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/checks/urls.py", line 13, in check_url_config
+        return check_resolver(resolver)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/core/checks/urls.py", line 23, in check_resolver
+        return check_method()
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 398, in check
+        for pattern in self.url_patterns:
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+        res = instance.__dict__[self.name] = self.func(instance)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 579, in url_patterns
+        patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+        res = instance.__dict__[self.name] = self.func(instance)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 572, in urlconf_module
+        return import_module(self.urlconf_name)
+      File "/Users/chris/Coursewares/django-workshop/venv/lib/python3.6/importlib/__init__.py", line 126, in import_module
+        return _bootstrap._gcd_import(name[level:], package, level)
+      File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+      File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+      File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+      File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+      File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+      File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+      File "/Users/chris/Coursewares/django-workshop/tmp_src_2019/cookbook/cookbook/urls.py", line 26, in <module>
+        path('recipe/<str:slug>/', recipes.views.detail),
+      AttributeError: module 'recipes.views' has no attribute 'detail'
 
 It results in an error, because until now you still have no view written.
 

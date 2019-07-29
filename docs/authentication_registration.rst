@@ -73,21 +73,24 @@ Now we create the file :file:`urls.py` in directory :file:`userauth`:
     from django.contrib.auth import views as auth_views
 
     urlpatterns = [
-        path('login/', auth_views.login,
-             {'template_name': 'userauth/login.html'}, name='userauth_login'),
-        path('logout/', auth_views.logout, {
-                'next_page': reverse_lazy('recipes_recipe_index'),
-             },
-             name='userauth_logout'),
-        path('password-change/', auth_views.password_change,
-             {
-                 'template_name': 'userauth/password_change_form.html',
-                 'post_change_redirect': 'userauth_password_change_done',
-             },
+        path(
+            'login/', 
+            auth_views.LoginView.as_view(template_name='userauth/login.html'), 
+            name='userauth_login'),
+        path(
+            'logout/', 
+            auth_views.LogoutView.as_view(next_page=reverse_lazy('recipes_recipe_index')),
+            name='userauth_logout'),
+        path(
+            'password-change/', 
+            auth_views.PasswordChangeView.as_view(
+                template_name='userauth/password_change_form.html',
+                success_url='userauth_password_change_done'),
             name='userauth_password_change'),
-        path('password-change-done/', auth_views.password_change_done,
-             {'template_name': 'userauth/password_change_done.html'},
-             name='userauth_password_change_done'),
+        path(
+            'password-change-done/', 
+            auth_views.PasswordChangeDoneView.as_view(template_name='userauth/password_change_done.html'),
+            name='userauth_password_change_done'),
     ]
 
 It contains the URLs for login and logout as well as changing the password. The
@@ -277,12 +280,15 @@ URLs:
 
     urlpatterns = [
         # ...
-        path('register/', userauth.views.register,
-             {'next_page_name': 'userauth_register_done'},
-             name='userauth_register'),
-        path('welcome/',
-             TemplateView.as_view(template_name='userauth/register_done.html'),
-             name='userauth_register_done'),
+        path(
+            'register/', 
+            userauth.views.register,
+            {'next_page_name': 'userauth_register_done'},
+            name='userauth_register'),
+        path(
+            'welcome/',
+            TemplateView.as_view(template_name='userauth/register_done.html'),
+            name='userauth_register_done'),
     ]
 
 The second URL ``userauth_register_done`` uses the generic view

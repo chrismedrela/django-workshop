@@ -40,6 +40,10 @@ the new URLconf of the application to an URL:
     :emphasize-lines: 3
     :language: python
 
+Don't forget to add one import::
+
+    import recipes.urls
+
 You can now test this configuration, the frontend should work as usual.
 
 Define URLs centrally

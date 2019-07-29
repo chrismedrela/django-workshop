@@ -1,8 +1,0 @@
-$ python manage.py runserver
-Performing system checks...
-
-System check identified no issues (0 silenced).
-August 28, 2017 - 10:35:38
-Django version 1.11.4, using settings 'cookbook.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.

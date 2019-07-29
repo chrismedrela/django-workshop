@@ -245,7 +245,7 @@ todo_include_todos = False
 extlinks = {'djangodocs': ('https://docs.djangoproject.com/en/2.0/%s', None)}
 
 rst_epilog = """
-.. |djangoversion| replace:: 2.0.3
+.. |djangoversion| replace:: 2.2.3
 """
 
 linkcheck_ignore = [

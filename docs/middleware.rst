@@ -58,10 +58,10 @@ list of middlewares in the file :file:`settings.py`:
 
 ..  code-block:: python
 
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = [
         # ...
         'cookbook.middleware.RejectMiddleware'
-    )
+    ]
 
 Now you can try different browsers. All browsers whose user agent matches the
 regular expression only get the page where the notice appears.

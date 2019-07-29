@@ -61,8 +61,16 @@ Add the following code:
 
 And run the tests:
 
-.. command-output:: python manage.py test recipes
-    :cwd: ../src/cookbook_tests
+::
+
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    .ss.
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.580s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default'...
 
 Unit tests have much more advantages than disadvantages:
 
@@ -88,29 +96,103 @@ Different ways of running the tests
 
 To get a more detailed output use the ``-v2`` option:
 
-.. command-output:: python manage.py test recipes -v2
-    :cwd: ../src/cookbook_tests
+::
+
+    Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+    Operations to perform:
+      Synchronize unmigrated apps: crispy_forms, debug_toolbar, messages, staticfiles
+      Apply all migrations: admin, auth, contenttypes, recipes, sessions
+    Synchronizing apps without migrations:
+      Creating tables...
+        Running deferred SQL...
+    Running migrations:
+      Applying contenttypes.0001_initial... OK
+      Applying auth.0001_initial... OK
+      Applying admin.0001_initial... OK
+      Applying admin.0002_logentry_remove_auto_add... OK
+      Applying admin.0003_logentry_add_action_flag_choices... OK
+      Applying contenttypes.0002_remove_content_type_name... OK
+      Applying auth.0002_alter_permission_name_max_length... OK
+      Applying auth.0003_alter_user_email_max_length... OK
+      Applying auth.0004_alter_user_username_opts... OK
+      Applying auth.0005_alter_user_last_login_null... OK
+      Applying auth.0006_require_contenttypes_0002... OK
+      Applying auth.0007_alter_validators_add_error_messages... OK
+      Applying auth.0008_alter_user_username_max_length... OK
+      Applying auth.0009_alter_user_last_name_max_length... OK
+      Applying auth.0010_alter_group_name_max_length... OK
+      Applying auth.0011_update_proxy_permissions... OK
+      Applying recipes.0001_initial... OK
+      Applying sessions.0001_initial... OK
+    System check identified no issues (0 silenced).
+    test_date_created_autoset (recipes.tests.RecipeSaveTests)
+    Verifies date_created is autoset correctly. ... ok
+    test_no_transaction (recipes.tests.RecipeSaveTests)
+    Demonstrates skipIfDBFeature decorator. ... skipped 'Database has feature(s) supports_transactions'
+    test_python_25 (recipes.tests.RecipeSaveTests)
+    Demonstrates skipIf decorator. ... skipped 'Test runs only with Python 2.5 and lower'
+    test_slug_is_unique (recipes.tests.RecipeSaveTests)
+    Verifies if a slug is unique. ... ok
+
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.572s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
 
 Use the ``-v0`` option to hide most of the output, passing no arguments
 to the ``test`` command executes all tests:
 
-.. command-output:: python manage.py test -v0
-    :cwd: ../src/cookbook_tests
+::
+
+    $ python manage.py test -v0
+    System check identified no issues (0 silenced).
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.567s
+
+    OK (skipped=2)
 
 You can also run the tests just for a single test case:
 
-.. command-output:: python manage.py test recipes.tests.RecipeSaveTests
-    :cwd: ../src/cookbook_tests
+::
+
+    $ python manage.py test recipes.tests.RecipeSaveTests
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    .ss.
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.621s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default'...
 
 And even for a single test method:
 
-.. command-output:: python manage.py test recipes.tests.RecipeSaveTests.test_slug_is_unique
-    :cwd: ../src/cookbook_tests
+::
+
+    $ python manage.py test recipes.tests.RecipeSaveTests.test_slug_is_unique
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    .
+    ----------------------------------------------------------------------
+    Ran 1 test in 0.189s
+
+    OK
+    Destroying test database for alias 'default'...
 
 You can also provide a path to a directory to discover tests below that directory:
 
-.. command-output:: python manage.py test recipes/
-    :cwd: ../src/cookbook_tests
+::
+
+    $ python manage.py test recipes/
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    .ss.
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.560s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default'...
 
 You can specify a custom filename pattern match using the ``-p`` (or ``--pattern``)
 option, if your test files are named differently from the :file:`test*.py` pattern:
@@ -140,13 +222,42 @@ contents:
 Now you can create the data for the coverage report of the application
 ``recipes`` with the following command:
 
-.. command-output:: coverage run manage.py test recipes
-    :cwd: ../src/cookbook_tests
+::
+
+    $ coverage run manage.py test recipes
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    .ss.
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.625s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default'...
 
 Display the coverage data with this command in the shell:
 
-.. command-output:: coverage report
-    :cwd: ../src/cookbook_tests
+::
+
+    $ coverage report
+    Name                               Stmts   Miss Branch BrPart  Cover   Missing
+    ------------------------------------------------------------------------------
+    cookbook/__init__.py                   0      0      0      0   100%
+    cookbook/middleware.py                13      7      4      0    35%   13, 16-22
+    recipes/__init__.py                    0      0      0      0   100%
+    recipes/admin.py                       8      0      0      0   100%
+    recipes/apps.py                        3      3      0      0     0%   1-5
+    recipes/forms.py                       6      0      0      0   100%
+    recipes/models.py                     43      3      2      1    91%   19, 54, 63, 57->59
+    recipes/templatetags/__init__.py       0      0      0      0   100%
+    recipes/templatetags/recipes.py       44     32      6      0    24%   19-31, 36-39, 42-50, 59-62, 67-72
+    recipes/views.py                      72     30      2      0    57%   25-27, 39-52, 82-87, 90-92, 122-124, 127-129, 132-133
+    userauth/__init__.py                   0      0      0      0   100%
+    userauth/admin.py                      1      0      0      0   100%
+    userauth/apps.py                       3      3      0      0     0%   1-5
+    userauth/models.py                     1      0      0      0   100%
+    userauth/views.py                     12      7      4      0    31%   9-16
+    ------------------------------------------------------------------------------
+    TOTAL                                206     85     18      1    54%
 
 You can create a HTML coverage report with this command::
 
@@ -173,8 +284,9 @@ rename it to :file:`test_models.py`::
 
     $ mv tests.py tests/test_models.py
 
-Next, you delete also the bytecode file :file:`tests.py` so this does
-not prevent the execution of the code in the :file:`tests` package::
+If you're still working on Python 2,  delete also the bytecode file
+:file:`tests.py` so this does not prevent the execution of the code in the
+:file:`tests` package::
 
     $ rm tests.pyc
 
@@ -219,18 +331,56 @@ code to match your file name.
 
 The front-end tests can be called explicitly with this command:
 
-.. command-output:: python manage.py test recipes.tests.test_views
-    :cwd: ../src/cookbook_tests_pkg
+::
+
+    $ python manage.py test recipes.tests.test_views
+    Creating test database for alias 'default'...
+    .....
+    ----------------------------------------------------------------------
+    Ran 5 tests in 0.620s
+
+    OK
+    Destroying test database for alias 'default'...
+    System check identified no issues (0 silenced).
 
 If you create now another coverage report you can see that the coverage for the views has increased:
 
-.. command-output:: coverage run manage.py test recipes
-    :cwd: ../src/cookbook_tests_pkg
+::
+
+    $ coverage run manage.py test recipes
+    Creating test database for alias 'default'...
+    .s.s.....
+    ----------------------------------------------------------------------
+    Ran 9 tests in 1.136s
+
+    OK (skipped=2)
+    Destroying test database for alias 'default'...
+    System check identified no issues (0 silenced).
 
 Display the coverage data with this command in the shell:
 
-.. command-output:: coverage report
-    :cwd: ../src/cookbook_tests_pkg
+::
+
+    $ coverage report
+    Name                               Stmts   Miss Branch BrPart  Cover   Missing
+    ------------------------------------------------------------------------------
+    cookbook/__init__.py                   0      0      0      0   100%
+    cookbook/middleware.py                13      4      4      1    59%   17-20, 16->17
+    recipes/__init__.py                    0      0      0      0   100%
+    recipes/admin.py                       8      0      0      0   100%
+    recipes/apps.py                        3      3      0      0     0%   1-5
+    recipes/forms.py                       6      0      0      0   100%
+    recipes/models.py                     43      1      2      0    98%   54
+    recipes/templatetags/__init__.py       0      0      0      0   100%
+    recipes/templatetags/recipes.py       44      6      6      2    84%   21-22, 30, 45-46, 68, 26->30, 67->68
+    recipes/views.py                      72     13      2      1    81%   25-27, 48-50, 122-124, 127-129, 132-133, 45->48
+    userauth/__init__.py                   0      0      0      0   100%
+    userauth/admin.py                      1      0      0      0   100%
+    userauth/apps.py                       3      3      0      0     0%   1-5
+    userauth/models.py                     1      0      0      0   100%
+    userauth/views.py                     12      7      4      0    31%   9-16
+    ------------------------------------------------------------------------------
+    TOTAL                                206     37     18      4    79%
 
 Further links to the Django documentation
 =========================================
