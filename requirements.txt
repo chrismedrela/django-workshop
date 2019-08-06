@@ -22,3 +22,5 @@ django-tastypie==0.14.2
 # sphinxcontrib-googleanalytics==0.1
 sphinxcontrib-programoutput==0.14
 sqlparse==0.3.0
+djangorestframework==3.10.2
+djangorestframework-yaml==1.0.3
