@@ -34,15 +34,6 @@ Add ``rest_framework`` to your ``INSTALLED_APPS`` setting::
         'rest_framework',
     ]
 
-If you're intending to use the browsable API you'll probably also want to add
-REST framework's login and logout views. Add the following to your root ``urls.py``
-file::
-
-    urlpatterns = [
-        ...
-        path('api-auth/', include('rest_framework.urls')),
-    ]
-
 Basic Configuration
 ===================
 
@@ -70,6 +61,9 @@ Add serializers to ``recipes/rest_serializers.py`` file::
 
 
     class RecipeSerializer(serializers.HyperlinkedModelSerializer):
+        author = serializers.SlugRelatedField(
+            queryset=User.objects.all(), slug_field='username')
+
         class Meta:
             model = Recipe
             fields = [
@@ -110,13 +104,14 @@ Add urls to ``recipes/rest_urls.py`` file::
     from . import rest_views
 
     router = routers.DefaultRouter()
-    router.register(r'recipes', rest_views.RecipeViewSet)
-    router.register(r'categories', rest_views.CategoryViewSet)
+    router.register('recipes', rest_views.RecipeViewSet)
+    router.register('categories', rest_views.CategoryViewSet)
 
     # Wire up our API using automatic URL routing.
     # Additionally, we include login URLs for the browsable API.
     urlpatterns = [
         path('api/', include(router.urls)),
+        # REST framework's login and logout views:
         path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
     ]
 

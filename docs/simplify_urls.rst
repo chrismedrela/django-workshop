@@ -22,7 +22,7 @@ So we put an empty file named :file:`urls.py` inside the application
     import recipes.views
 
     urlpatterns = [
-        path('recipe/<str:slug>/$', recipes.views.detail),
+        path('recipe/<str:slug>/', recipes.views.detail),
         path('', recipes.views.index),
     ]
 

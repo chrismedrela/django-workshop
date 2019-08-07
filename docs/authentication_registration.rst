@@ -85,7 +85,7 @@ Now we create the file :file:`urls.py` in directory :file:`userauth`:
             'password-change/', 
             auth_views.PasswordChangeView.as_view(
                 template_name='userauth/password_change_form.html',
-                success_url='userauth_password_change_done'),
+                success_url=reverse_lazy('userauth_password_change_done')),
             name='userauth_password_change'),
         path(
             'password-change-done/', 
