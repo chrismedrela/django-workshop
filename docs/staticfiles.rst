@@ -78,7 +78,7 @@ that the context is wrapped into ``RequestContext`` automatically.
 
 .. literalinclude:: ../src/cookbook_staticfiles/recipes/views.py
     :linenos:
-    :emphasize-lines: 1, 8, 13
+    :emphasize-lines: 1, 8, 12-13
 
 Further links to the Django documentation
 =========================================

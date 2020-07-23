@@ -83,6 +83,18 @@ class-based views.
 
         return render(request, 'recipes/index.html', {'object_list': recipes, 'page_obj': recipes})
 
+In this case you need to replace:
+
+::
+
+    {% if is_paginated %}
+
+with:
+
+::
+
+    {% if page_obj.paginator.num_pages != 1 %}
+
 Further links to the Django documentation
 =========================================
 

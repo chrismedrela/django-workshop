@@ -27,4 +27,5 @@ packer_cache
 # Just to make development easier for Chris Mędrela
 tmp_src/
 tmp_src_2019/
+tmp_src_2020/
 cookbook/

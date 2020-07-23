@@ -43,6 +43,32 @@ Table of contents
    debug_toolbar
    expand_views
    simplify_urls
+   staticfiles
+   error_handling
+   debugging
+   authentication_registration
+   permissions
+   recipe_form
+   messages
+   class_based_views
+   pagination
+   authors
+   copyright
+
+.. All topics:
+   introduction
+   preparation
+   install_django
+   start_django_project
+   recipes_app
+   recipes_admin
+   syncdb_runserver
+   recipes_views_templates
+   database_api
+   local_settings
+   debug_toolbar
+   expand_views
+   simplify_urls
    django_rest_framework
    staticfiles
    error_handling

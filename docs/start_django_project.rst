@@ -16,6 +16,7 @@ After you've run the command you'll find the following structure::
     cookbook
     |-- cookbook
     |   |-- __init__.py
+    |   |-- asgi.py
     |   |-- settings.py
     |   |-- urls.py
     |   `-- wsgi.py
@@ -44,8 +45,8 @@ And try out the development server with the following command:
     You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
     Run 'python manage.py migrate' to apply them.
 
-    July 28, 2019 - 12:50:40
-    Django version 2.2.3, using settings 'cookbook.settings'
+    July 23, 2020 - 10:57:18
+    Django version 3.0.8, using settings 'cookbook.settings'
     Starting development server at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
 

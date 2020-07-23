@@ -15,7 +15,7 @@ Therefore Python needs to be installed first.
 
 .. note::
 
-    Django |djangoversion| supports Python from version 3.5+. If you have an
+    Django |djangoversion| supports Python from version 3.6+. If you have an
     older version of Python, you should update it. The newest Django version
     doesn't support Python 2.
 
@@ -26,19 +26,8 @@ command line option ``-V``:
 
 .. note::
 
-    If you are using Python 3 please make sure you have Python 3.5 or
+    If you are using Python 3 please make sure you have Python 3.6 or
     greater installed. Otherwise there will be problems.
-
-    Also consider adding the following future-import on top of every
-    Python file you are going to edit to ensure Python 2 and 3
-    compatibility::
-
-        from __future__ import unicode_literals
-
-    This way all regular strings will be unicode string literals.
-
-    If you want to learn more read the :djangodocs:`Python 3
-    <topics/python3/>` part of the Django documentation.
 
 If you've already got the right version of Python installed, you can
 skip ahead to :ref:`Python Package Managers <python-package-manager>`.
@@ -68,7 +57,7 @@ Website and install it.
 
 So that Python works under Windows as expected, you need to change the
 environment variable :envvar:`%PATH%`. In the examples, we'll assume
-that your Python is installed in :file:`C:\\Python37\\`.
+that your Python is installed in :file:`C:\\Python38\\`.
 
 Windows 7
 ^^^^^^^^^
@@ -80,18 +69,6 @@ Windows 7
 #. A further window will open, click the
    :guilabel:`Environment Variables`
 #. Under `System Variables`, select the ``PATH``
-#. Now click on :guilabel:`Edit` and add the required directory:
-   ``;C:\Python37\;C:\Python37\Scripts;``. (The semi-colon at the
-   beginning is required!)
-#. Now close the windows :guilabel:`Environment Variables` and
-   :guilabel:`System Properties` by clicking on `OK`.
-
-Windows XP
-^^^^^^^^^^
-
-#. :menuselection:`Start --> Control Panel --> System --> Advanced`
-#. Click on the :guilabel:`Environment Variables`, then a new window
-   will open. Under "System Variables" select ``Path``
 #. Now click on :guilabel:`Edit` and add the required directory:
    ``;C:\Python37\;C:\Python37\Scripts;``. (The semi-colon at the
    beginning is required!)

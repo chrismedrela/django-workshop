@@ -47,12 +47,6 @@ Now open the file :file:`models.py` in a text editor. It contains only a single
 
     from django.db import models
 
-If you're working on Python 2, add the following line before the
-``import`` to prevent problems with the encoding::
-
-    # encoding: utf-8
-
-
 A Model for the categories
 --------------------------
 

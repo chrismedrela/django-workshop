@@ -115,8 +115,8 @@ Using permissions in templates
 
 The currently logged-in user’s permissions are stored in the template variable
 ``{{ perms }}``. This is an instance of
-``django.contrib.auth.context_processors.PermWrapper``, which is a template-
-friendly proxy of permissions.
+``django.contrib.auth.context_processors.auth``, which is a template-
+friendly proxy of permissions. YOu need to add it in settings.py:
 
 The ``{{ perms }}`` can be used like this:
 

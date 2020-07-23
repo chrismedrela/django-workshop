@@ -26,7 +26,6 @@ Now the two functions ``index`` and ``detail`` are replaced by these classes:
 
         def get_queryset(self):
             recipes = Recipe.objects.all()
-            logger.debug('Recipes count: %d' % recipes.count())
             return recipes
 
 

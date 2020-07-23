@@ -17,7 +17,7 @@ First, you should check your models with the following command:
 
     ERRORS:
     recipes.Recipe.photo: (fields.E210) Cannot use ImageField because Pillow is not installed.
-      HINT: Get Pillow at https://pypi.python.org/pypi/Pillow or run command "pip install Pillow".
+        HINT: Get Pillow at https://pypi.org/project/Pillow/ or run command "python -m pip install Pillow".
 
     System check identified 1 issue (0 silenced).
 
@@ -103,6 +103,8 @@ database. With the following command you can issue the queries:
 
 ::
 
+    $ python manage.py sqlmigrate recipes 0001_initial
+
     BEGIN;
     --
     -- Create model Category
@@ -171,8 +173,8 @@ Now you can start the development server:
     Performing system checks...
 
     System check identified no issues (0 silenced).
-    July 28, 2019 - 15:15:02
-    Django version 2.2.3, using settings 'cookbook.settings'
+    July 23, 2020 - 13:16:08
+    Django version 3.0.8, using settings 'cookbook.settings'
     Starting development server at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
 
